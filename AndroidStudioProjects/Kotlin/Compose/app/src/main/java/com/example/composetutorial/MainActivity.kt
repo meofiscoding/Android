@@ -15,7 +15,10 @@ import com.example.composetutorial.ui.theme.ComposeTutorialTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //setContent block: xac dinh bo cuc cua Activity, trong do cac ham Compose co the dc goi
+        //Ban chi co the goi cac ham Compose tu cac ham Compose khac
         setContent {
+            Text(text = "Hello World")
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
