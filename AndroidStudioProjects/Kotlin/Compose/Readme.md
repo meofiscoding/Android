@@ -174,6 +174,18 @@ fun PreviewConversation() {
 
   
 ```
+  > 2. Animate message while expanding
+- Bạn sẽ bổ sung khả năng `mở rộng thông báo` để hiển thị một thông báo dài hơn, giúp `hoạt hóa` cả kích thước nội dung lẫn màu nền.
+- Để theo dõi những thay đổi về trạng thái này, bạn cần sử dụng các hàm `remember` và `mutableStateOf`.
+- Các `hàm kết hợp` (Composable) có thể `lưu trữ` trạng thái cục bộ trong bộ nhớ bằng cách sử dụng `remember` và `theo dõi` các `thay đổi đối với giá trị` được truyền đến `mutableStateOf`.  
+- `Thành phần kết hợp (và các yếu tố có thể kết hợp con)` sử dụng trạng thái này sẽ được `tự động vẽ lại` khi giá trị này được cập nhật => Hành động này được gọi là [tái kết hợp](https://developer.android.com/jetpack/compose/mental-model#recomposition).
+- Khi bạn sử dụng các `API trạng thái` của `Compose` như `remember` và `mutableStateOf`, mọi `thay đổi về trạng thái` sẽ tự động `cập nhật giao diện người dùng`.
+- ⭐️ Lưu ý: Bạn sẽ cần thêm các mục nhập sau để sử dụng đúng `by`. <kbd> Alt+Enter </kbd> hoặc <kbd> Option+Enter </kbd> sẽ thêm các mục nhập đó cho bạn.
+`import androidx.compose.runtime.getValue`
+`import androidx.compose.runtime.setValue`
+- Giờ đây, bạn có thể thay đổi nền của nội dung thông báo dựa trên isExpanded khi nhấp vào một thông báo.
+
+
 
 
   
