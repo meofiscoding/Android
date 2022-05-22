@@ -69,6 +69,188 @@ fun PreviewMessageCard() {
  - Định kiểu cho tiêu đề và thêm đường viền cho hình ảnh.
  
   > 3. FONT
+  - Các kiểu chữ `Material Typography` có trong `MaterialTheme`, chỉ cần thêm chúng vào các thành phần kết hợp `Text`.
+  
+  > 4. SHAPES
+  - Với `Shape`, bạn có thể thêm những chi tiết hoàn thiện.
+  - Trước tiên, hãy gói nội dung thông báo bằng văn bản vào xung quanh thành phần kết hợp `Surface.`
+  - Theo đó cho phép tùy chỉnh `hình dạng`(shapes) và `độ cao`(elevation) của nội dung
+  ```
+  // ...
+// ...
+import androidx.compose.material.Surface
+
+@Composable
+fun MessageCard(msg: Message) {
+   Row(modifier = Modifier.padding(all = 8.dp)) {
+       Image(
+           painter = painterResource(R.drawable.profile_picture),
+           contentDescription = null,
+           modifier = Modifier
+               .size(40.dp)
+               .clip(CircleShape)
+               .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
+       )
+       Spacer(modifier = Modifier.width(8.dp))
+
+       Column {
+           Text(
+               text = msg.author,
+               color = MaterialTheme.colors.secondaryVariant,
+               style = MaterialTheme.typography.subtitle2
+           )
+
+           Spacer(modifier = Modifier.height(4.dp))
+
+           Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
+               Text(
+                   text = msg.body,
+                   modifier = Modifier.padding(all = 4.dp),
+                   style = MaterialTheme.typography.body2
+               )
+           }
+       }
+   }
+}
+  
+  ```
+  
+  > 5. ENABLE DARK MODE
+  - Bạn có thể bật [giao diện tối](https://developer.android.com/guide/topics/ui/look-and-feel/darktheme) (hoặc chế độ ban đêm) để tránh hiển thị màn hình sáng vào ban đêm hoặc để tiết kiệm pin của thiết bị.
+  - Nhờ sự hỗ trợ `Material Design`, `Jetpack Compose` có thể xử lý giao diện tối theo mặc định. 
+  - Việc sử dụng màu, văn bản và nền của Material Design sẽ tự động thích ứng với nền tối.
+  - Bạn có thể tạo nhiều `bản xem trước` (@Preview) trong tệp dưới dạng các `hàm` riêng biệt hoặc thêm nhiều `chú thích` vào cùng một `hàm`.
+  - Thêm chú thích `xem trước` mới và bật `chế độ ban đêm`.
+  ```
+  // ...
+import android.content.res.Configuration
+
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark Mode"
+)
+@Composable
+fun PreviewMessageCard() {
+   ComposeTutorialTheme {
+       MessageCard(
+           msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
+       )
+   }
+}
+  
+  ```
+- Lựa chọn màu cho giao diện sáng và tối được xác định trong tệp `Theme.kt` do IDE tạo.
+![image](https://user-images.githubusercontent.com/82217333/169660182-28c2f856-9d97-4fee-9640-c39ba40508a3.png)
+
+## 4. List and Animation ##
+  > 1. Create a list of message
+  - Bạn cần tạo một hàm `Conversation` để hiển thị nhiều thông báo.
+  - Đối với trường hợp này, hãy sử dụng [LazyColumn](https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#LazyColumn(androidx.compose.ui.Modifier,androidx.compose.foundation.lazy.LazyListState,androidx.compose.foundation.layout.PaddingValues,kotlin.Boolean,androidx.compose.foundation.layout.Arrangement.Vertical,androidx.compose.ui.Alignment.Horizontal,androidx.compose.foundation.gestures.FlingBehavior,kotlin.Boolean,kotlin.Function1)) và [LazyRow](https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#LazyRow(androidx.compose.ui.Modifier,androidx.compose.foundation.lazy.LazyListState,androidx.compose.foundation.layout.PaddingValues,kotlin.Boolean,androidx.compose.foundation.layout.Arrangement.Horizontal,androidx.compose.ui.Alignment.Vertical,androidx.compose.foundation.gestures.FlingBehavior,kotlin.Boolean,kotlin.Function1)) của Compose
+  - Các thành phần kết hợp này chỉ `hiển thị các phần tử hiển thị trên màn hình`, vì vậy chúng được thiết kế để có hiệu quả với những `trang thông tin dài`.
+ 
+```
+// ...
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) { message ->
+            MessageCard(message)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewConversation() {
+    ComposeTutorialTheme {
+        Conversation(SampleData.conversationSample)
+    }
+}
+
+  
+```
+  > 2. Animate message while expanding
+- Bạn sẽ bổ sung khả năng `mở rộng thông báo` để hiển thị một thông báo dài hơn, giúp `hoạt hóa` cả kích thước nội dung lẫn màu nền.
+- Để theo dõi những thay đổi về trạng thái này, bạn cần sử dụng các hàm `remember` và `mutableStateOf`.
+- Các `hàm kết hợp` (Composable) có thể `lưu trữ` trạng thái cục bộ trong bộ nhớ bằng cách sử dụng `remember` và `theo dõi` các `thay đổi đối với giá trị` được truyền đến `mutableStateOf`.  
+- `Thành phần kết hợp (và các yếu tố có thể kết hợp con)` sử dụng trạng thái này sẽ được `tự động vẽ lại` khi giá trị này được cập nhật => Hành động này được gọi là [tái kết hợp](https://developer.android.com/jetpack/compose/mental-model#recomposition).
+- Khi bạn sử dụng các `API trạng thái` của `Compose` như `remember` và `mutableStateOf`, mọi `thay đổi về trạng thái` sẽ tự động `cập nhật giao diện người dùng`.
+- ⭐️ Lưu ý: Bạn sẽ cần thêm các mục nhập sau để sử dụng đúng `by`. <kbd> Alt+Enter </kbd> hoặc <kbd> Option+Enter </kbd> sẽ thêm các mục nhập đó cho bạn.
+`import androidx.compose.runtime.getValue`
+`import androidx.compose.runtime.setValue`
+- Giờ đây, bạn có thể thay đổi nền của nội dung thông báo dựa trên isExpanded khi nhấp vào một thông báo.
+- Bạn sẽ sử dụng công cụ sửa đổi `clickable` để xử lý các `sự kiện nhấp chuột` trên `thành phần kết hợp` (Composable).
+- Thay vì chỉ chuyển đổi màu nền của `Surface`, bạn sẽ hoạt hoá màu nền bằng cách sửa đổi dần giá trị của nền từ `MaterialTheme.colors.surface` thành `MaterialTheme.colors.primary` và ngược lại. 
+- Để thực hiện việc này, bạn cần sử dụng hàm `animateColorAsState`.
+```
+// ...
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+
+@Composable
+fun MessageCard(msg: Message) {
+    Row(modifier = Modifier.padding(all = 8.dp)) {
+        Image(
+            painter = painterResource(R.drawable.profile_picture),
+            contentDescription = null,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .border(1.5.dp, MaterialTheme.colors.secondaryVariant, CircleShape)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // We keep track if the message is expanded or not in this
+        // variable
+        var isExpanded by remember { mutableStateOf(false) }
+        // surfaceColor will be updated gradually from one color to the other
+        val surfaceColor by animateColorAsState(
+            if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface,
+        )
+
+        // We toggle the isExpanded variable when we click on this Column
+        Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
+            Text(
+                text = msg.author,
+                color = MaterialTheme.colors.secondaryVariant,
+                style = MaterialTheme.typography.subtitle2
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                elevation = 1.dp,
+                // surfaceColor color will be changing gradually from primary to surface
+                color = surfaceColor,
+                // animateContentSize will change the Surface size gradually
+                modifier = Modifier.animateContentSize().padding(1.dp)
+            ) {
+                Text(
+                    text = msg.body,
+                    modifier = Modifier.padding(all = 4.dp),
+                    // If the message is expanded, we display all its content
+                    // otherwise we only display the first line
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        }
+    }
+}
+
+  
+```
+- Cuối cùng, bạn sử dụng công cụ sửa đổi `animateContentSize` để tạo hình ảnh động cho kích thước vùng chứa thông báo
+
+
+
+  
 
 
  
