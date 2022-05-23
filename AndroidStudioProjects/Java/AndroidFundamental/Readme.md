@@ -118,7 +118,62 @@ __4. Change the app Gradle configuration__
 ![image](https://user-images.githubusercontent.com/82217333/169742220-33d4938d-61c0-4126-876e-206de04f4b47.png)
 👉🏻 For a deeper look into __Gradle__, check out the [Build System Overview](http://developer.android.com/sdk/installing/studio-build.html) and [Configuring Gradle Builds documentation](http://developer.android.com/tools/building/configuring-gradle.html).
 
-
+__5. Add log statements to your app__
+  - In this task, you will add `Log statements` to your app, which display messages in the `Logcat` pane. 
+  - `Log` messages are a powerful `debugging tool` that you can use to `check on values`, `execution paths`, and `report exceptions`.
+  
+   1. View the Logcat pane
+  - To see the `Logcat` pane, click the `Logcat tab` at the bottom of the `Android Studio` window as shown in the figure below.
+  ![image](https://user-images.githubusercontent.com/82217333/169854341-49e1d025-913b-48ae-b1f7-72773dc84e8d.png)
+  - In the figure above:
+    >The __Logcat__ tab for opening and closing the Logcat pane, which displays information about your app as it is running. If you add `Log` statements to your app, `Log` messages appear here. 
+    >The `Log` level menu is set to `Verbose`(chi tiết) (the default), which shows all Log messages. Other settings include `Debug`, `Error`, `Info`, and `Warn`.
+    
+    2. Add log statements to your app
+   - `Log` statements in your app code display messages in the Logcat pane. For example:
+ ```
+ Log.d("MainActivity", "Hello World"); 
+ ```
+   The parts of the `message` are:
+  - __Log__: The `Log class` for sending log messages to the `Logcat pane`.
+  - __d__: The `Debug Log` level setting to filter log message display in the `Logcat pane`. Other log levels are __e__ for `Error`, __w__ for `Warn`, and __i__ for `Info`.
+  - __"MainActivity"__: The `first argument` is a tag which can be used to filter messages in the `Logcat pane`. This is commonly the name of the __Activity__ from which the message originates. However, you can make this anything that is useful to you for debugging.
+  - __"Hello world"__: The second argument is the `actual message`.
+  
+  By convention (Theo quy ước) , log tags are defined as constants for the __Activity__:
+  ```
+  private static final String LOG_TAG = MainActivity.class.getSimpleName();
+  ```
+  ⭐️ Follow these steps:
+  1. Open your Hello World app in Android studio, and open `MainActivity`.
+  2. To add `unambiguous imports` automatically to your project (such as `android.util.Log` required for using `Log`), choose `File > Settings` in _Windows_, or `Android Studio > Preferences` in _macOS_.
+  3. Choose `Editor > General >Auto Import`. Select all checkboxes and set Insert imports on paste to Always.
+  4. Click `Apply` and then click `OK`.
+  5. In the `onCreate()` method of `MainActivity`, add the following statement:
+```
+Log.d("MainActivity", "Hello World"); 
+```  
+  The onCreate() method should now look like the following code:
+```
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    Log.d("MainActivity", "Hello World");
+}
+```
+  6. If the `Logcat` pane is not already open, click the `Logcat` tab at the bottom of `Android Studio` to open it.
+  7. Check that the `name of the target` and `package name` of the app are correct.
+  8. Change the `Log level` in the `Logcat pane` to __Debug__ (or leave as Verbose since there are so few log messages).
+<img width="402" alt="Screen Shot 2022-05-23 at 22 59 40" src="https://user-images.githubusercontent.com/82217333/169860094-16ba9741-cdd4-45c3-b33b-4e75ca162aeb.png">
+  9. Run your app.
+  
+  The following message should appear in the `Logcat pane`:
+```
+11-24 14:06:59.001 4696-4696/? D/MainActivity: Hello World
+```
+👉🏻 _Tips_: If you are seeing a lot of extra log messages from your emulator, you can use the filter (🔍) to see only log messages that contain `MainActivity`.
+  
 
 
 
