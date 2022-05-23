@@ -100,6 +100,25 @@ __2. Explore the app and res folders_
 
 - The `res` folder holds resources, such as layouts, strings, and images. An Activity is usually associated with a layout of UI views defined as an XML file. This file is usually named after its Activity.
 
+__3. Explore the manifests folder__
+- The `AndroidManifest.xml` file describes all of the components of your `Android app`. 
+- All components for an app, such as each` Activity`, must be declared in this `XML file`.
+
+__4. Change the app Gradle configuration__
+  1. Change the minimum SDK version for the app
+> Follow these steps:
+  * Expand the `Gradle Scripts` folder if it is not already open, and double-click the `build.gradle (Module:Hello_World.app)` file.
+> The content of the file appears in the code editor.
+  * Within the `defaultConfig` block, change the value of `minSdkVersion` to __23__.
+  * The code editor shows a notification bar at the top with the `Sync Now` link.
+  2. Sync the new Gradle configuration
+  - When you make changes to the `build configuration` files in a project, `Android Studio` requires that you `sync` the project files so that it can `import` the `build configuration` changes and `run some checks` to make sure the configuration won't create `build errors`.
+  - To sync the project files, click `Sync Now` in the notification bar that appears when making a change (as shown in the previous figure), or click the `Sync Project with Gradle Files` icon ![image](https://user-images.githubusercontent.com/82217333/169742115-737ca9e7-65fe-4733-9538-ab32c804ecd5.png) in the toolbar.
+  - When the `Gradle synchronization` is finished, the message `Gradle build finished</span` appears in the bottom left corner of the Android Studio window.
+![image](https://user-images.githubusercontent.com/82217333/169742220-33d4938d-61c0-4126-876e-206de04f4b47.png)
+👉🏻 For a deeper look into __Gradle__, check out the [Build System Overview](http://developer.android.com/sdk/installing/studio-build.html) and [Configuring Gradle Builds documentation](http://developer.android.com/tools/building/configuring-gradle.html).
+
+
 
 
 
