@@ -10,19 +10,21 @@
         android:id="@+id/button_toast"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Toast"
+        android:text="@string/button_label_toast"
         android:textColor="@color/black"
         app:backgroundTint="@color/purple_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="showToast"
+        />
 
     <Button
         android:id="@+id/button_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Count"
+        android:text="@string/button_label_count"
         android:textColor="@color/black"
         app:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +32,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:onClick="countUp"/>
 
     <TextView
         android:id="@+id/show_count"
@@ -39,7 +42,7 @@
         android:layout_marginTop="12dp"
         android:background="#FFFF00"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/count_initial_value"
         android:textColor="@color/purple_500"
         android:textSize="160sp"
         android:textStyle="bold"
