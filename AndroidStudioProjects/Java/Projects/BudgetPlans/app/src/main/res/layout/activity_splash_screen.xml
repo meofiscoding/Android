@@ -10,6 +10,7 @@
         android:id="@+id/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:elevation="2dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/savings"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +22,7 @@
     <ImageView
         android:id="@+id/app_name"
         android:layout_width="300dp"
+        android:elevation="2dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:src="@drawable/budget_plan"
@@ -33,6 +35,7 @@
         android:id="@+id/lottie"
         android:layout_width="324dp"
         android:layout_height="352dp"
+        android:elevation="2dp"
         android:scaleX="1"
         android:scaleY="1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,5 +46,10 @@
         app:layout_constraintVertical_bias="0.238"
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/splash" />
+
+    <com.cuberto.liquid_swipe.LiquidPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
