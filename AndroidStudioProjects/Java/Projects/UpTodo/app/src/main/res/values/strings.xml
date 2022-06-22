@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">UpTodo</string>
+    <string name="string">UpTodo</string>
+    <string name="skip">Skip</string>
+    <string name="description_onboard1">onboard1</string>
+    <string name="Header_onboard1">your tasks</string>
+    <string name="sub_header_onboard1">You can easily manage all of your daily tasks in DoMe for free</string>
+    <string name="content_des_onboard1">nav</string>
+    <string name="back">back</string>
+    <string name="next_btn">Next</string>
+    <string name="header_onboard_2">daily routine</string>
+    <string name="sub_header_onboard2">In Uptodo you can create your personalized routine to stay productive</string>
+    <string name="header_onboard3">Organaize your tasks</string>
+    <string name="sub_header_onboard3">You can organize your daily tasks by adding your tasks into separate categories</string>
+    <string name="Tittle_onboard1">Manage</string>
+    <string name="Tittle_onboard2">Create</string>
+</resources>
