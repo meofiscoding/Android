@@ -10,8 +10,23 @@
     <string name="next_btn">Next</string>
     <string name="header_onboard_2">daily routine</string>
     <string name="sub_header_onboard2">In Uptodo you can create your personalized routine to stay productive</string>
-    <string name="header_onboard3">Organaize your tasks</string>
+    <string name="header_onboard3">your tasks</string>
     <string name="sub_header_onboard3">You can organize your daily tasks by adding your tasks into separate categories</string>
     <string name="Tittle_onboard1">Manage</string>
     <string name="Tittle_onboard2">Create</string>
+    <string name="title_onboard3">Organize</string>
+    <string name="back_navigation">back_navigation</string>
+    <string name="welcome">Welcome to UpTodo</string>
+    <string name="description_welcome">Please login to your account or create new account to continue</string>
+    <string name="create_account">create account</string>
+    <string name="login">Login</string>
+    <string name="get_started">get started</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

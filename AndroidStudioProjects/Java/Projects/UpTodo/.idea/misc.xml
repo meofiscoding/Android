@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.1484375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_chevron_left_24.xml" value="0.222" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_onboarding1.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_start.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/layout/fragment_on_boarding1.xml" value="0.1901504516601563" />
         <entry key="app/src/main/res/layout/fragment_on_boarding2.xml" value="0.1897644927536232" />
-        <entry key="app/src/main/res/layout/fragment_on_boarding3.xml" value="0.10219879150390626" />
+        <entry key="app/src/main/res/layout/fragment_on_boarding3.xml" value="0.1681625366210937" />
       </map>
     </option>
   </component>
