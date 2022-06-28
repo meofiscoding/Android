@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.myapplication.ui.login.LoginActivity;
+
 public class StartActivity extends AppCompatActivity {
     ImageView back;
     Button login;
@@ -29,6 +31,12 @@ public class StartActivity extends AppCompatActivity {
             register.setVisibility(View.GONE);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.start_activity, new OnBoardingFragment3()).commit();
+        });
+        //Go to Login Page
+        login.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(v.getContext(), LoginActivity.class);
+            v.getContext().startActivity(intent);
         });
     }
 }
