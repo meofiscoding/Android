@@ -8,8 +8,11 @@
         <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/drawable/background_button_google.xml" value="0.308" />
         <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/drawable/edit_text_background.xml" value="0.308" />
         <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/drawable/fingerprint_background.xml" value="0.308" />
-        <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
+        <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout-w936dp/activity_login.xml" value="0.275" />
+        <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout/activity_main.xml" value="0.31145833333333334" />
+        <entry key="..\:/Users/Sinka.Dev/Downloads/Android/AndroidStudioProjects/Java/Projects/UpTodo/app/src/main/res/layout/activity_register.xml" value="0.245018115942029" />
         <entry key="app/src/main/res/drawable/ic_baseline_chevron_left_24.xml" value="0.222" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_onboarding1.xml" value="0.14114583333333333" />
