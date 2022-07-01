@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,18 +18,31 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
+    //Biometric variable
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
+    //Init instance fingerprint ImageView
     private ImageView fingerprint;
+    //Init instance of Firebase Authentication
+    private FirebaseAuth mAuth;
+    //Init instance of register redirect
+    private TextView register;
+    //Init instance of backbtn
+    private ImageView back;
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
         //Check if biometric authentication is available in device
         BiometricManager biometricManager = BiometricManager.from(this);
         switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
@@ -90,5 +104,19 @@ public class LoginActivity extends AppCompatActivity {
         // if needed by your app.
         fingerprint = findViewById(R.id.fingerprint);
         fingerprint.setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
+        //Register Text view
+        register = findViewById(R.id.registerbtn);
+        register.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(v.getContext(), RegisterActivity.class);
+            v.getContext().startActivity(intent);
+        });
+        //Go back activity
+        back = findViewById(R.id.backbtn);
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(v.getContext(), StartActivity.class);
+            v.getContext().startActivity(intent);
+        });
     }
 }
