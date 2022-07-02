@@ -37,4 +37,8 @@
     <string name="register">Register</string>
     <string name="fingerprint">fingerprint</string>
     <string name="other_login_choice">other_login_choice</string>
+    <string name="index">Index</string>
+    <string name="focuse">Focuse</string>
+    <string name="calendar">Calendar</string>
+    <string name="profile">Profile</string>
 </resources>

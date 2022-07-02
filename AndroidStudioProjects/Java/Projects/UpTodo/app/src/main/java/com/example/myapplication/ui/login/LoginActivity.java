@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.index.HomeActivity;
 import com.example.myapplication.ui.login.LoginViewModel;
 import com.example.myapplication.ui.login.LoginViewModelFactory;
 import com.example.myapplication.databinding.ActivityLoginBinding;
@@ -49,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     //Declare Firebase authentication
     FirebaseAuth mAuth;
-    //Biometric Login Authenticaton
+    //Biometric Login Authentication
     ImageView fingerprint;
-    //Variable to Display dialog biomatric
+    //Variable to Display dialog biometric
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
@@ -60,13 +61,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Init Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
         //Biometric Authentication
         fingerprint = findViewById(R.id.fingerprint);
         BiometricManager biometricManager = BiometricManager.from(this);
         switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
             case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(this, "App can authenticate using biometrics.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "App can authenticate using biometrics.", Toast.LENGTH_SHORT).show();
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
                 Toast.makeText(this, "No biometric features available on this device.", Toast.LENGTH_SHORT).show();
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(MainActivity.this,
+        biometricPrompt = new BiometricPrompt(LoginActivity.this,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode,
@@ -99,8 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(),
-                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
 
             @Override
@@ -121,8 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         // Prompt appears when user clicks "Log in".
         // Consider integrating with the keystore to unlock cryptographic operations,
         // if needed by your app.
-        Button biometricLoginButton = findViewById(R.id.biometric_login);
-        biometricLoginButton.setOnClickListener(view -> {
+        fingerprint.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
         });
 
