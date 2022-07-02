@@ -41,4 +41,7 @@
     <string name="focuse">Focuse</string>
     <string name="calendar">Calendar</string>
     <string name="profile">Profile</string>
+    <string name="register_with_google">register with google</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

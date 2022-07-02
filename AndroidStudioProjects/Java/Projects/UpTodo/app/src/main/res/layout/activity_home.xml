@@ -26,7 +26,7 @@
         android:layout_marginBottom="2dp"
         android:text="Index"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="35sp"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="52dp"
-        android:layout_height="53dp"
+        android:layout_width="42dp"
+        android:layout_height="44dp"
         android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
