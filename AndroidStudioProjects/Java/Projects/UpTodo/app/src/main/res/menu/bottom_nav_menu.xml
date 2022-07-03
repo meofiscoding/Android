@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/index" />
+        android:title="@string/index"
+        android:color="@color/white"
+
+        />
     <item
         android:id="@+id/calendar"
         android:icon="@drawable/ic_baseline_calendar_month_24"
-        android:title="@string/calendar" />
+        android:title="@string/calendar"
+        android:color="@color/white"/>
     <item
         android:id="@+id/placeholder"
         android:title="" />
     <item
         android:id="@+id/focuse"
         android:icon="@drawable/ic_baseline_alarm_24"
-        android:title="@string/focuse" />
+        android:title="@string/focus"
+        android:color="@color/white"/>
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_person_outline_24"
-        android:title="@string/profile" />
+        android:title="@string/profile"
+        android:color="@color/white"/>
 </menu>

@@ -38,10 +38,18 @@
     <string name="fingerprint">fingerprint</string>
     <string name="other_login_choice">other_login_choice</string>
     <string name="index">Index</string>
-    <string name="focuse">Focuse</string>
+    <string name="focus">Focus</string>
     <string name="calendar">Calendar</string>
     <string name="profile">Profile</string>
     <string name="register_with_google">register with google</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="confirm_password">Confirm Password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_task">empty_task</string>
+    <string name="what_do_you_want_to_do_today">What do you want to do today?</string>
+    <string name="tap_to_add_your_tasks">Tap + to add your tasks</string>
+    <string name="filter">filter</string>
+    <string name="user_ava">user_ava</string>
+    <string name="fab">FAB</string>
 </resources>

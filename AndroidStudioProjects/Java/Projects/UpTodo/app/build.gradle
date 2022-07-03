@@ -34,11 +34,11 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.7.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.annotation:annotation:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'com.google.android.material:material:1.6.1'
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
@@ -51,9 +51,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.cuberto:liquid-swipe:1.0.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.core:core-ktx:1.8.0'
     // Java language Biometric implementation
     implementation "androidx.biometric:biometric:1.1.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.0"
 }
 
