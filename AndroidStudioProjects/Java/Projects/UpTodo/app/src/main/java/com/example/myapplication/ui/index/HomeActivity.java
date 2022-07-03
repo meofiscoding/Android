@@ -10,7 +10,7 @@ import com.example.myapplication.SplashScreen;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity{
     //Init variable Firebase
     FirebaseAuth mAuth;
     //Binding

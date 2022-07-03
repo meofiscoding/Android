@@ -52,4 +52,8 @@
     <string name="filter">filter</string>
     <string name="user_ava">user_ava</string>
     <string name="fab">FAB</string>
+    <string name="previous_month">previous_month</string>
+    <string name="today">Today</string>
+    <string name="next_month">next_month</string>
+    <string name="completed">Completed</string>
 </resources>
