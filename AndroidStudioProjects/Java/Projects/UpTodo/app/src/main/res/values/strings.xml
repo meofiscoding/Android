@@ -56,4 +56,13 @@
     <string name="today">Today</string>
     <string name="next_month">next_month</string>
     <string name="completed">Completed</string>
+    <string name="sun">SUN</string>
+    <string name="february">February</string>
+    <string name="year">2022</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="thu">THU</string>
 </resources>
