@@ -17,9 +17,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.03">
 
         <!--Bottom nav bar-->
+
+        <!--Floating Action Button-->
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
@@ -28,6 +30,8 @@
             android:backgroundTint="@color/gray_400"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="16dp"
+            app:layout_anchor="@+id/bottom_nav"
+            app:layout_anchorGravity="bottom|center"
             app:navigationIconTint="#FFFFFF">
 
             <!--Bottom Navigation view-->
@@ -43,28 +47,41 @@
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
-        <!--Floating Action Button-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/purple_A200"
             android:clickable="true"
+            android:contentDescription="@string/fab"
+            android:elevation="2dp"
+            android:focusable="true"
             app:layout_anchor="@id/bottom_nav"
             app:srcCompat="@drawable/ic_baseline_add_24"
-            app:tint="#FFFFFF"
-            android:contentDescription="@string/fab"
-            android:focusable="true" />
+            app:tint="#FFFFFF" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+        <include layout="@layout/fragment_new_task_" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

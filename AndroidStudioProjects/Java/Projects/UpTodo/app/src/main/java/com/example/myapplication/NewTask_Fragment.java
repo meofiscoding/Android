@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,15 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TodayTaskFragment#newInstance} factory method to
+ * Use the {@link NewTask_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayTaskFragment extends Fragment {
+public class NewTask_Fragment extends Fragment {
 
-    View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -24,8 +29,7 @@ public class TodayTaskFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    public TodayTaskFragment() {
+    public NewTask_Fragment() {
         // Required empty public constructor
     }
 
@@ -35,11 +39,11 @@ public class TodayTaskFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TodayTaskFragment.
+     * @return A new instance of fragment NewTask_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TodayTaskFragment newInstance(String param1, String param2) {
-        TodayTaskFragment fragment = new TodayTaskFragment();
+    public static NewTask_Fragment newInstance(String param1, String param2) {
+        NewTask_Fragment fragment = new NewTask_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +64,10 @@ public class TodayTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_today_task, container, false);
-        return view;
+//        return inflater.inflate(R.layout.fragment_new_task_, container, false);
+        // Inflate the layout for this fragment
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_new_task_, container, false);
+        return root;
     }
+
 }

@@ -24,6 +24,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Enter your Username</string>
+    <string name="prompt_new_task">Enter your Task</string>
     <string name="prompt_password">● ● ● ● ● ● ● ● ● ●</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -65,4 +66,13 @@
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
     <string name="thu">THU</string>
+    <string name="add_task">Add Task</string>
+    <string name="settime">setTime</string>
+    <string name="finish">finish</string>
+    <string name="description">Description</string>
+    <string name="flag">flag</string>
+    <string name="next_week">Next Week</string>
+    <string name="due_date">Due Date</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="flags">flag</string>
 </resources>
