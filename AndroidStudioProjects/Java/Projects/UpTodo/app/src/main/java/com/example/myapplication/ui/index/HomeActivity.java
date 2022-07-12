@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.index;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -82,7 +83,12 @@ public class HomeActivity extends AppCompatActivity {
                     timePickerDialog.show();
                 });
                 //Flag onClick
-
+                ImageView category = layoutBottomSheet.findViewById(R.id.category_img);
+                category.setOnClickListener(v1 -> {
+                    Dialog dialog = new Dialog(layoutBottomSheet.getContext());
+                    dialog.setContentView(R.layout.task_category_dialog);
+                    dialog.show();
+                });
                 //Category onClick
 
                 //Send onCLick

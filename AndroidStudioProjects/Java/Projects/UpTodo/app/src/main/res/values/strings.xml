@@ -75,4 +75,7 @@
     <string name="due_date">Due Date</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="flags">flag</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
 </resources>

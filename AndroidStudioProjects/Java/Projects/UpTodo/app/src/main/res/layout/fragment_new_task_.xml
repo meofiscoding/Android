@@ -43,7 +43,7 @@
         android:paddingStart="30dp"
         android:selectAllOnFocus="true"
         android:textColor="@color/white"
-        android:textColorHint="#BCAAA4"
+        android:textColorHint="#D7CCC8"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,10 +64,9 @@
         android:textColor="#AFAFAF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <ImageView
         android:id="@+id/timer_img"
@@ -81,10 +80,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
         app:layout_constraintVertical_bias="0.01999998"
-        app:srcCompat="@drawable/ic_baseline_alarm_24" />
+        app:srcCompat="@drawable/ic_baseline_alarm_24"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/category_img"
         android:layout_width="28dp"
         android:layout_height="29dp"
         android:contentDescription="@string/flag"
@@ -97,14 +97,14 @@
         app:srcCompat="@drawable/ic_outline_local_offer_24" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/priority_todo_button"
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:contentDescription="@string/flags"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintStart_toEndOf="@+id/category_img"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
         app:layout_constraintVertical_bias="0.01"
         app:srcCompat="@drawable/ic_baseline_outlined_flag_24" />
@@ -117,25 +117,68 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/priority_todo_button"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
         app:layout_constraintVertical_bias="0.021"
         app:srcCompat="@drawable/ic_baseline_send_24"
         tools:ignore="ImageContrastCheck" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup_priority"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priority_todo_button">
+
+        <RadioButton
+            android:id="@+id/radioButton_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#C91517"
+            android:minHeight="48dp"
+            android:text="@string/high"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/radioButton_med"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFB300"
+            android:minHeight="48dp"
+            android:text="@string/medium"
+            android:textColor="#7B1FA2" />
+
+        <RadioButton
+            android:id="@+id/radioButton_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
+            android:minHeight="48dp"
+            android:text="@string/low"
+            android:textColor="@color/white" />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="244dp"
         android:layout_height="33dp"
-        android:layout_marginTop="68dp"
         android:gravity="center_horizontal"
         android:text="@string/due_date"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_priority" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/tomorrow_chip"
@@ -158,7 +201,7 @@
         android:text="@string/next_week"
         app:chipIcon="@drawable/ic_baseline_next_week_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tomorrow_chip" />
 
@@ -170,16 +213,17 @@
         android:text="@string/today"
         app:chipIcon="@drawable/ic_baseline_today_24"
         app:layout_constraintEnd_toEndOf="@+id/tomorrow_chip"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tomorrow_chip"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <CalendarView
         android:id="@+id/calendar_view"
-        android:layout_width="318dp"
-        android:layout_height="296dp"
+        android:layout_width="327dp"
+        android:layout_height="303dp"
         android:layout_marginBottom="20dp"
-        android:theme="@style/CustomCalendarMonth"
         android:dateTextAppearance="@style/CustomCalendarDay"
+        android:theme="@style/CustomCalendarMonth"
         android:weekDayTextAppearance="@style/CustomCalendarWeek"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
