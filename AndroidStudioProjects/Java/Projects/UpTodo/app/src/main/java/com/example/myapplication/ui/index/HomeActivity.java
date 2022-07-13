@@ -5,12 +5,18 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +29,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.SplashScreen;
 import com.example.myapplication.databinding.ActivityHomeBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +48,13 @@ public class HomeActivity extends AppCompatActivity {
     //Bottom sheet behavior
     private BottomSheetBehavior bottomSheetBehavior;
     private int hours, minutes;
+    private RadioGroup priorityRadioGroup;
+    private RadioButton seleectedradiobutton;
+    private int selectedButtonID;
+    private CalendarView calendarView;
+    private TextView enter_todo_txt;
+    private ImageView saveButton;
+    private Group calendarGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         layoutBottomSheet = findViewById(R.id.bottomSheet);
         //Set bottomsheet behaviour
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
         //FAB onClick
         mFAB.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
@@ -82,18 +97,31 @@ public class HomeActivity extends AppCompatActivity {
                     //Show dialog
                     timePickerDialog.show();
                 });
-                //Flag onClick
+                //Category onClick
                 ImageView category = layoutBottomSheet.findViewById(R.id.category_img);
                 category.setOnClickListener(v1 -> {
                     Dialog dialog = new Dialog(layoutBottomSheet.getContext());
                     dialog.setContentView(R.layout.task_category_dialog);
                     dialog.show();
                 });
-                //Category onClick
+                //Flag onClick
+                ImageView priority = layoutBottomSheet.findViewById(R.id.priority_todo_button);
+                priorityRadioGroup = layoutBottomSheet.findViewById(R.id.radioGroup_priority);
 
                 //Send onCLick
+                calendarGroup = layoutBottomSheet.findViewById(R.id.calendar_group);
+                calendarView = layoutBottomSheet.findViewById(R.id.calendar_view);
+                Chip todaychip = layoutBottomSheet.findViewById(R.id.today_chip);
+                Chip tomorrow = layoutBottomSheet.findViewById(R.id.tomorrow_chip);
+                Chip nextweekchip = layoutBottomSheet.findViewById(R.id.next_week_chip);
+                enter_todo_txt = layoutBottomSheet.findViewById(R.id.enter_todo_et);
+                saveButton = layoutBottomSheet.findViewById(R.id.saveBtn);
+                saveButton.setOnClickListener(v2 -> {
+                    String task = enter_todo_txt.getText().toString().trim();
+                    if (!TextUtils.isEmpty(task)){
 
-
+                    }
+                });
             } else {
                 //Close bottom sheet
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

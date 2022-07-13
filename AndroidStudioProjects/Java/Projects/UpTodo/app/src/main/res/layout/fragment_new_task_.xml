@@ -44,14 +44,14 @@
         android:selectAllOnFocus="true"
         android:textColor="@color/white"
         android:textColorHint="#D7CCC8"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -70,18 +70,18 @@
 
     <ImageView
         android:id="@+id/timer_img"
-        android:layout_width="33dp"
+        android:layout_width="37dp"
         android:layout_height="27dp"
         android:clickable="true"
         android:contentDescription="@string/settime"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintVertical_bias="0.01999998"
-        app:srcCompat="@drawable/ic_baseline_alarm_24"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_baseline_alarm_24" />
 
     <ImageView
         android:id="@+id/category_img"
@@ -92,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toEndOf="@+id/timer_img"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintVertical_bias="0.019"
         app:srcCompat="@drawable/ic_outline_local_offer_24" />
 
@@ -105,12 +105,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toEndOf="@+id/category_img"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintVertical_bias="0.01"
         app:srcCompat="@drawable/ic_baseline_outlined_flag_24" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/saveBtn"
         android:layout_width="38dp"
         android:layout_height="34dp"
         android:contentDescription="@string/finish"
@@ -118,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toEndOf="@+id/priority_todo_button"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintVertical_bias="0.021"
         app:srcCompat="@drawable/ic_baseline_send_24"
         tools:ignore="ImageContrastCheck" />
