@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CalendarView;
 import android.widget.EditText;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,37 +41,39 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
     //Init variable Firebase
     private FirebaseAuth mAuth;
-    //Binding
-    private ActivityHomeBinding binding;
-    //FAB Button
-    private FloatingActionButton mFAB;
     //New task layout
     private ConstraintLayout layoutBottomSheet;
     //Bottom sheet behavior
     private BottomSheetBehavior bottomSheetBehavior;
     private int hours, minutes;
     private RadioGroup priorityRadioGroup;
-    private RadioButton seleectedradiobutton;
+    private RadioButton selectedRadioButton;
     private int selectedButtonID;
     private CalendarView calendarView;
     private TextView enter_todo_txt;
     private ImageView saveButton;
-    private Group calendarGroup;
     private EditText description_txt;
+    private Date dueDate;
+    protected Priority priority;
+    protected String category;
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        //Binding
+        com.example.myapplication.databinding.ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
         replaceFragment(new HomeFragment());
         //onClick button to show layoutBottomSheet
-        mFAB = findViewById(R.id.floatingActionButton2);
+        //FAB Button
+        FloatingActionButton mFAB = findViewById(R.id.floatingActionButton2);
         //Bottom sheet Assign
         layoutBottomSheet = findViewById(R.id.bottomSheet);
         //Set bottomsheet behaviour
@@ -91,8 +93,6 @@ public class HomeActivity extends AppCompatActivity {
                         //Init hours and minutes
                         hours = hourOfDay;
                         minutes = minute;
-                        //Init Calendar
-                        Calendar calendar = Calendar.getInstance();
                         //Set hours and minutes
                         calendar.set(0, 0, 0, hours, minutes);
                         //Set selected time on textview
@@ -111,17 +111,67 @@ public class HomeActivity extends AppCompatActivity {
                     dialog.setContentView(R.layout.task_category_dialog);
                     dialog.show();
                 });
-                //Flag onClick
-                ImageView priority = layoutBottomSheet.findViewById(R.id.priority_todo_button);
+                //Flag Priority onClick
+                ImageView flag = layoutBottomSheet.findViewById(R.id.priority_todo_button);
                 priorityRadioGroup = layoutBottomSheet.findViewById(R.id.radioGroup_priority);
-
-                //Send onCLick
-                calendarGroup = layoutBottomSheet.findViewById(R.id.calendar_group);
+                flag.setOnClickListener(view3 -> {
+                    //set priority visible
+                    priorityRadioGroup.setVisibility(priorityRadioGroup.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+                    //check which radiobutton has been check
+                    priorityRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                        if (priorityRadioGroup.getVisibility() == View.VISIBLE) {
+                            selectedButtonID = checkedId;
+                            selectedRadioButton = layoutBottomSheet.findViewById(selectedButtonID);
+                            if (selectedRadioButton.getId() == R.id.radioButton_high) {
+                                priority = Priority.HIGH;
+                            } else if (selectedRadioButton.getId() == R.id.radioButton_med) {
+                                priority = Priority.MEDIUM;
+                            } else {
+                                priority = Priority.LOW;
+                            }
+                        } else {
+                            priority = Priority.LOW;
+                        }
+                    });
+                });
+                //Get date from Calendar View
                 calendarView = layoutBottomSheet.findViewById(R.id.calendar_view);
-                Chip todaychip = layoutBottomSheet.findViewById(R.id.today_chip);
+                calendarView.setOnDateChangeListener((calendarView, year, month, dayOfMoth) -> {
+                    //Set clean state of calendar
+                    calendar.clear();
+                    calendar.set(year, month, dayOfMoth);
+                    dueDate = calendar.getTime();
+                });
+                //SendBtn onCLick
+                //Implement today_chip onClick
+                Chip today_chip = layoutBottomSheet.findViewById(R.id.today_chip);
+                today_chip.setOnClickListener(view5 -> {
+                    //set data for today
+                    calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    calendar.add(Calendar.DAY_OF_YEAR, 0);
+                    calendarView.setDate(calendar.getTime().getTime(), true, true);
+                    dueDate = calendar.getTime();
+                });
+                //Implement tomorrow_chip onClick
                 Chip tomorrow = layoutBottomSheet.findViewById(R.id.tomorrow_chip);
-                Chip nextweekchip = layoutBottomSheet.findViewById(R.id.next_week_chip);
-                enter_todo_txt = layoutBottomSheet.findViewById(R.id.enter_todo_et);
+                tomorrow.setOnClickListener(view4 -> {
+                    //set data for today
+                    calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    calendar.add(Calendar.DAY_OF_YEAR, 1);
+                    calendarView.setDate(calendar.getTime().getTime(), true, true);
+                    dueDate = calendar.getTime();
+                });
+                //Implement next_week_chip onClick
+                Chip next_week_chip = layoutBottomSheet.findViewById(R.id.next_week_chip);
+                next_week_chip.setOnClickListener(view6 -> {
+                    //set data for today
+                    calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    calendar.add(Calendar.DAY_OF_YEAR, 7);
+                    calendarView.setDate(calendar.getTime().getTime(), true, true);
+                    dueDate = calendar.getTime();
+                });
+                //Assign variable
+                enter_todo_txt = layoutBottomSheet.findViewById(R.id.enter_cate_name);
                 description_txt = layoutBottomSheet.findViewById(R.id.description);
                 saveButton = layoutBottomSheet.findViewById(R.id.saveBtn);
                 //Assign and Init TaskDAO
@@ -129,15 +179,12 @@ public class HomeActivity extends AppCompatActivity {
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
                     String description = description_txt.getText().toString().trim();
-                    if (!TextUtils.isEmpty(task)) {
-                        Task myTask = new Task(task, description, Priority.HIGH, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), false, new Category("University"));
-                        taskDAO.add(myTask).addOnSuccessListener(success -> {
-                            Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
-                        }).addOnFailureListener( err->{
-                            Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                    if (!TextUtils.isEmpty(task) && dueDate != null) {
+                        Task myTask = new Task(task, description, priority, dueDate, Calendar.getInstance().getTime(), false, new Category("University"));
+                        taskDAO.add(myTask).addOnSuccessListener(success -> Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(err -> Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show());
                     }
-                 });
+                });
             } else {
                 //Close bottom sheet
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

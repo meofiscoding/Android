@@ -56,5 +56,10 @@ dependencies {
     implementation "androidx.biometric:biometric:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.0"
     implementation  "com.google.firebase:firebase-database"
+    //For iconPack
+    implementation "com.maltaisn:icondialog:3.3.0"
+    implementation "com.maltaisn:iconpack-default:1.1.0"
+    //For color picker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 }
 

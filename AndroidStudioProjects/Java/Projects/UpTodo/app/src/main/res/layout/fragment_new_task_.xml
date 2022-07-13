@@ -23,7 +23,7 @@
         android:textColor="#FFFFFF"
         android:textSize="27sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/enter_todo_et"
+        app:layout_constraintBottom_toTopOf="@+id/enter_cate_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.769" />
 
     <EditText
-        android:id="@+id/enter_todo_et"
+        android:id="@+id/enter_cate_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

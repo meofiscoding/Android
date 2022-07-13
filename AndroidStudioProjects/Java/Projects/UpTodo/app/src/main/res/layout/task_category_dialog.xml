@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_dialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gray_400">
@@ -26,14 +27,14 @@
         android:layout_marginTop="42dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView11"
+        app:layout_constraintBottom_toTopOf="@+id/sport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10"
         app:srcCompat="@drawable/divider" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/CreateNewBtn"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="76dp"
@@ -41,43 +42,51 @@
         android:layout_marginEnd="76dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/primary"
+        android:enabled="true"
         android:text="Add Category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintTop_toBottomOf="@+id/home" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/grocery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
         android:layout_marginTop="32dp"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/grocery" />
+        app:srcCompat="@drawable/grocery"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="79dp"
+        android:clickable="true"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="79dp"
         app:layout_constraintEnd_toStartOf="@+id/textView17"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/work" />
+        app:srcCompat="@drawable/work"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="91dp"
         android:layout_marginEnd="35dp"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sport" />
+        app:srcCompat="@drawable/sport"
+        tools:ignore="ImageContrastCheck"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/textView15"
@@ -85,10 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:text="Grocery"
+        android:text="@string/grocery"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintStart_toStartOf="@+id/grocery"
+        app:layout_constraintTop_toBottomOf="@+id/grocery" />
 
     <TextView
         android:id="@+id/textView16"
@@ -98,109 +107,130 @@
         android:layout_marginEnd="14dp"
         android:text="Work"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+        app:layout_constraintEnd_toEndOf="@+id/work"
+        app:layout_constraintTop_toBottomOf="@+id/work" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/design"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
+        android:clickable="true"
         android:layout_marginTop="13dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
-        app:srcCompat="@drawable/design" />
+        app:srcCompat="@drawable/design"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/university"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="@+id/work"
         app:layout_constraintTop_toBottomOf="@+id/textView16"
-        app:srcCompat="@drawable/university" />
+        app:srcCompat="@drawable/university"
+        tools:ignore="ImageContrastCheck"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/social"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:clickable="true"
         android:layout_marginEnd="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17"
-        app:srcCompat="@drawable/social" />
+        app:srcCompat="@drawable/social"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView15"
+        android:id="@+id/music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
         android:layout_marginTop="13dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
-        app:srcCompat="@drawable/music" />
+        app:srcCompat="@drawable/music"
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
+        android:clickable="true"
         android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24"
-        app:srcCompat="@drawable/home" />
+        app:srcCompat="@drawable/home"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView17"
+        android:id="@+id/createnew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textView20"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toEndOf="@+id/imageView16"
-        app:srcCompat="@drawable/create_new" />
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:srcCompat="@drawable/create_new"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/health"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@+id/university"
         app:layout_constraintTop_toBottomOf="@+id/textView19"
-        app:srcCompat="@drawable/health" />
+        app:srcCompat="@drawable/health"
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
-        android:id="@+id/imageView19"
+        android:id="@+id/movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:clickable="true"
         android:layout_marginEnd="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25"
-        app:srcCompat="@drawable/movie" />
+        app:srcCompat="@drawable/movie"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
+        android:clickable="true"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginTop="8dp"
-        android:text="Sport"
+        android:text="@string/sport"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+        app:layout_constraintStart_toStartOf="@+id/sport"
+        app:layout_constraintTop_toBottomOf="@+id/sport"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="6dp"
-        android:text="Design"
+        android:layout_marginEnd="12dp"
+        android:text="@string/design"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+        app:layout_constraintEnd_toEndOf="@+id/design"
+        app:layout_constraintTop_toBottomOf="@+id/design" />
 
     <TextView
         android:id="@+id/textView19"
@@ -208,19 +238,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
-        android:text="University"
+        android:text="@string/university"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/imageView13"
-        app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+        app:layout_constraintStart_toStartOf="@+id/university"
+        app:layout_constraintTop_toBottomOf="@+id/university" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create New"
+        android:text="@string/create_new"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
-        app:layout_constraintEnd_toEndOf="@+id/imageView17"
+        app:layout_constraintEnd_toEndOf="@+id/createnew"
         app:layout_constraintTop_toTopOf="@+id/textView21" />
 
     <TextView
@@ -229,10 +259,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="11dp"
-        android:text="Home"
+        android:text="@string/home"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView16"
-        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+        app:layout_constraintEnd_toEndOf="@+id/home"
+        app:layout_constraintTop_toBottomOf="@+id/home" />
 
     <TextView
         android:id="@+id/textView22"
@@ -240,10 +270,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:text="Movie"
+        android:text="@string/movie"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView19"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+        app:layout_constraintEnd_toEndOf="@+id/movie"
+        app:layout_constraintTop_toBottomOf="@+id/movie" />
 
     <TextView
         android:id="@+id/textView23"
@@ -251,10 +281,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginTop="12dp"
-        android:text="Health"
+        android:text="@string/health"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/imageView18"
-        app:layout_constraintTop_toBottomOf="@+id/imageView18" />
+        app:layout_constraintStart_toStartOf="@+id/health"
+        app:layout_constraintTop_toBottomOf="@+id/health" />
 
     <TextView
         android:id="@+id/textView24"
@@ -262,10 +292,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:text="Music"
+        android:text="@string/music"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView15"
-        app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+        app:layout_constraintEnd_toEndOf="@+id/music"
+        app:layout_constraintTop_toBottomOf="@+id/music" />
 
     <TextView
         android:id="@+id/textView25"
@@ -273,9 +303,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="8dp"
-        android:text="Social"
+        android:text="@string/social"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/imageView14"
-        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+        app:layout_constraintStart_toStartOf="@+id/social"
+        app:layout_constraintTop_toBottomOf="@+id/social" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
