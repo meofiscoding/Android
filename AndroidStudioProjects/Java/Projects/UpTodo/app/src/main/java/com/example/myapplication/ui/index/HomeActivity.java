@@ -9,10 +9,12 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,7 +29,11 @@ import com.example.myapplication.HomeFragment;
 import com.example.myapplication.ProfileFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.SplashScreen;
+import com.example.myapplication.data.TaskDAO;
 import com.example.myapplication.databinding.ActivityHomeBinding;
+import com.example.myapplication.model.Category;
+import com.example.myapplication.model.Priority;
+import com.example.myapplication.model.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView enter_todo_txt;
     private ImageView saveButton;
     private Group calendarGroup;
+    private EditText description_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +122,22 @@ public class HomeActivity extends AppCompatActivity {
                 Chip tomorrow = layoutBottomSheet.findViewById(R.id.tomorrow_chip);
                 Chip nextweekchip = layoutBottomSheet.findViewById(R.id.next_week_chip);
                 enter_todo_txt = layoutBottomSheet.findViewById(R.id.enter_todo_et);
+                description_txt = layoutBottomSheet.findViewById(R.id.description);
                 saveButton = layoutBottomSheet.findViewById(R.id.saveBtn);
+                //Assign and Init TaskDAO
+                TaskDAO taskDAO = new TaskDAO();
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
-                    if (!TextUtils.isEmpty(task)){
-
+                    String description = description_txt.getText().toString().trim();
+                    if (!TextUtils.isEmpty(task)) {
+                        Task myTask = new Task(task, description, Priority.HIGH, Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), false, new Category("University"));
+                        taskDAO.add(myTask).addOnSuccessListener(success -> {
+                            Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener( err->{
+                            Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
                     }
-                });
+                 });
             } else {
                 //Close bottom sheet
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
