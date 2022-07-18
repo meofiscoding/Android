@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +30,9 @@ public class CategoryDialog extends Dialog implements android.view.View.OnClickL
 //            CreateCategory_Dialog acd = new CreateCategory_Dialog(c);
 //            this.dismiss();
 //            acd.show();
-
+            Intent intent = new Intent();
+            intent.setClass(v.getContext(), New_Category.class);
+            v.getContext().startActivity(intent);
         });
         ImageView imageView1 = findViewById(R.id.grocery);
         ImageView imageView2 = findViewById(R.id.work);
