@@ -88,4 +88,13 @@
     <string name="music">Music</string>
     <string name="health">Health</string>
     <string name="grocery">Grocery</string>
+    <string name="category_name">Category name:</string>
+    <string name="category_icon">Category icon:</string>
+    <string name="create_category">Create Category</string>
+    <string name="create_new_category">Create new Category</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="category_color">Category color:</string>
+    <string name="choose_icon_from_library">Choose icon from library</string>
+    <string name="prompt_category">Category name</string>
 </resources>

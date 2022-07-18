@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.index;
 
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.CalendarFragment;
+import com.example.myapplication.CategoryDialog;
 import com.example.myapplication.FocuseFragment;
 import com.example.myapplication.HomeFragment;
 import com.example.myapplication.ProfileFragment;
@@ -107,9 +107,11 @@ public class HomeActivity extends AppCompatActivity {
                 //Category onClick
                 ImageView category = layoutBottomSheet.findViewById(R.id.category_img);
                 category.setOnClickListener(v1 -> {
-                    Dialog dialog = new Dialog(layoutBottomSheet.getContext());
-                    dialog.setContentView(R.layout.task_category_dialog);
-                    dialog.show();
+//                    Dialog dialog = new Dialog(layoutBottomSheet.getContext());
+//                    dialog.setContentView(R.layout.task_category_dialog);
+//                    dialog.show();
+                    CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
+                    cdd.show();
                 });
                 //Flag Priority onClick
                 ImageView flag = layoutBottomSheet.findViewById(R.id.priority_todo_button);

@@ -1,44 +1,58 @@
 package com.example.myapplication;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class CategoryDialog extends AppCompatDialogFragment implements View.OnClickListener {
-    ImageView imageView1;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageView4;
-    ImageView imageView5;
-    ImageView imageView6;
-    ImageView imageView7;
-    ImageView imageView8;
-    ImageView imageView9;
-    ImageView imageView10;
-    ImageView imageView11;
-    Button addCategory;
+public class CategoryDialog extends Dialog implements android.view.View.OnClickListener {
+    private Button getAddCategory;
+    private Context c;
 
-    @NonNull
+    public CategoryDialog(@NonNull Context context) {
+        super(context);
+        this.c = context;
+    }
+
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.task_category_dialog, null);
-        builder.setView(view);
-        addCategory = view.findViewById(R.id.CreateNewBtn);
-        addCategory.setOnClickListener(v -> {
-            CreateCategory_Dialog createCategory_dialog = new CreateCategory_Dialog();
-            createCategory_dialog.show(getActivity().getSupportFragmentManager(),"Create new Category");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.task_category_dialog);
+        getAddCategory = (Button) findViewById(R.id.CreateNewBtn);
+        getAddCategory.setOnClickListener(v -> {
+//            CreateCategory_Dialog acd = new CreateCategory_Dialog(c);
+//            this.dismiss();
+//            acd.show();
+
         });
-        return super.onCreateDialog(savedInstanceState);
+        ImageView imageView1 = findViewById(R.id.grocery);
+        ImageView imageView2 = findViewById(R.id.work);
+        ImageView imageView3 = findViewById(R.id.sport);
+        ImageView imageView4 = findViewById(R.id.design);
+        ImageView imageView5 = findViewById(R.id.university);
+        ImageView imageView6 = findViewById(R.id.social);
+        ImageView imageView7 = findViewById(R.id.music);
+        ImageView imageView8 = findViewById(R.id.health);
+        ImageView imageView9 = findViewById(R.id.movie);
+        ImageView imageView10 = findViewById(R.id.home);
+        ImageView imageView11 = findViewById(R.id.createnew);
+        imageView1.setOnClickListener(this);
+        imageView2.setOnClickListener(this);
+        imageView3.setOnClickListener(this);
+        imageView4.setOnClickListener(this);
+        imageView5.setOnClickListener(this);
+        imageView6.setOnClickListener(this);
+        imageView7.setOnClickListener(this);
+        imageView8.setOnClickListener(this);
+        imageView9.setOnClickListener(this);
+        imageView10.setOnClickListener(this);
+        imageView11.setOnClickListener(this);
     }
 
     @Override
@@ -76,7 +90,6 @@ public class CategoryDialog extends AppCompatDialogFragment implements View.OnCl
                 categoryName = "Home";
                 break;
             case R.id.createnew:
-
                 break;
         }
     }
