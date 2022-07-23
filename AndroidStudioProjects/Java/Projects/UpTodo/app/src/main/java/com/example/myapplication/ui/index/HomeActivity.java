@@ -79,6 +79,12 @@ public class HomeActivity extends AppCompatActivity {
         //Set bottomsheet behaviour
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
+        Intent intent = getIntent();
+        if(Boolean.parseBoolean(intent.getStringExtra("backNavigation"))){
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
+            cdd.show();
+        }
         //FAB onClick
         mFAB.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
