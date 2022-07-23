@@ -27,7 +27,7 @@
         android:layout_marginTop="42dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/sport"
+        app:layout_constraintBottom_toTopOf="@+id/grocery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10"
@@ -35,125 +35,135 @@
 
     <Button
         android:id="@+id/CreateNewBtn"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="76dp"
+        android:layout_width="224dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/primary"
         android:enabled="true"
         android:text="Add Category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home" />
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <ImageView
         android:id="@+id/grocery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginEnd="10dp"
         android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/work"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/grocery"
-        android:focusable="true" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/grocery" />
 
     <ImageView
         android:id="@+id/work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="79dp"
+        android:layout_marginEnd="14dp"
         android:clickable="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="79dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView17"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/work"
-        android:focusable="true" />
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/sport"
+        app:layout_constraintStart_toEndOf="@+id/grocery"
+        app:layout_constraintTop_toTopOf="@+id/grocery"
+        app:srcCompat="@drawable/work" />
 
     <ImageView
         android:id="@+id/sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="91dp"
-        android:layout_marginEnd="35dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/work"
         app:srcCompat="@drawable/sport"
-        tools:ignore="ImageContrastCheck"
-        android:focusable="true" />
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="55dp"
+        android:gravity="center_horizontal"
         android:text="@string/grocery"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/grocery"
+        app:layout_constraintEnd_toStartOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grocery" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginEnd="54dp"
         android:text="Work"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/work"
+        app:layout_constraintEnd_toStartOf="@+id/textView17"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/work" />
 
     <ImageView
         android:id="@+id/design"
         android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="10dp"
         android:clickable="true"
-        android:layout_marginTop="13dp"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/university"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
-        app:srcCompat="@drawable/design"
-        android:focusable="true" />
+        app:srcCompat="@drawable/design" />
 
     <ImageView
         android:id="@+id/university"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="14dp"
         android:clickable="true"
-        app:layout_constraintStart_toStartOf="@+id/work"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/social"
+        app:layout_constraintStart_toEndOf="@+id/design"
         app:layout_constraintTop_toBottomOf="@+id/textView16"
         app:srcCompat="@drawable/university"
-        tools:ignore="ImageContrastCheck"
-        android:focusable="true" />
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
         android:id="@+id/social"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="11dp"
         android:clickable="true"
-        android:layout_marginEnd="35dp"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/university"
         app:layout_constraintTop_toBottomOf="@+id/textView17"
-        app:srcCompat="@drawable/social"
-        android:focusable="true" />
+        app:srcCompat="@drawable/social" />
 
     <ImageView
         android:id="@+id/music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/health"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
         app:srcCompat="@drawable/music"
@@ -163,35 +173,35 @@
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:clickable="true"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="14dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24"
-        app:srcCompat="@drawable/home"
-        android:focusable="true" />
+        app:srcCompat="@drawable/home" />
 
     <ImageView
         android:id="@+id/createnew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView20"
         android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toEndOf="@+id/home"
-        app:srcCompat="@drawable/create_new"
-        android:focusable="true" />
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:srcCompat="@drawable/create_new" />
 
     <ImageView
         android:id="@+id/health"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:layout_marginEnd="14dp"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/university"
+        app:layout_constraintEnd_toStartOf="@+id/movie"
+        app:layout_constraintStart_toEndOf="@+id/music"
         app:layout_constraintTop_toBottomOf="@+id/textView19"
         app:srcCompat="@drawable/health"
         tools:ignore="ImageContrastCheck" />
@@ -200,42 +210,48 @@
         android:id="@+id/movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="11dp"
         android:clickable="true"
-        android:layout_marginEnd="35dp"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/health"
         app:layout_constraintTop_toBottomOf="@+id/textView25"
-        app:srcCompat="@drawable/movie"
-        android:focusable="true" />
+        app:srcCompat="@drawable/movie" />
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="33dp"
         android:clickable="true"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="8dp"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:text="@string/sport"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/sport"
-        app:layout_constraintTop_toBottomOf="@+id/sport"
-        android:focusable="true" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
         android:text="@string/design"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/design"
+        app:layout_constraintStart_toStartOf="@+id/design"
         app:layout_constraintTop_toBottomOf="@+id/design" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:text="@string/university"
@@ -247,17 +263,20 @@
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:text="@string/create_new"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/textView21"
-        app:layout_constraintEnd_toEndOf="@+id/createnew"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:layout_constraintTop_toBottomOf="@+id/home" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
         android:layout_marginEnd="11dp"
         android:text="@string/home"
         android:textColor="@color/white"
@@ -268,17 +287,19 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
         android:text="@string/movie"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/movie"
+        app:layout_constraintStart_toStartOf="@+id/movie"
         app:layout_constraintTop_toBottomOf="@+id/movie" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_marginStart="9dp"
         android:layout_marginTop="12dp"
         android:text="@string/health"
@@ -290,16 +311,18 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
         android:text="@string/music"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/music"
+        app:layout_constraintStart_toStartOf="@+id/music"
         app:layout_constraintTop_toBottomOf="@+id/music" />
 
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="8dp"

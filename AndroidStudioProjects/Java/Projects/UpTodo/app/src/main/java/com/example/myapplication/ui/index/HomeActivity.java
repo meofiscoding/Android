@@ -2,6 +2,7 @@ package com.example.myapplication.ui.index;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -43,7 +44,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Calendar;
 import java.util.Date;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements CategoryDialog.OnMyDialogResult {
     //Init variable Firebase
     private FirebaseAuth mAuth;
     //New task layout
@@ -60,7 +61,8 @@ public class HomeActivity extends AppCompatActivity {
     private EditText description_txt;
     private Date dueDate;
     protected Priority priority;
-    protected String category;
+    protected String categoryName;
+    private CategoryDialog cdd;
     Calendar calendar = Calendar.getInstance();
 
     @Override
@@ -79,11 +81,13 @@ public class HomeActivity extends AppCompatActivity {
         //Set bottomsheet behaviour
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
+        //get intent back navigation
         Intent intent = getIntent();
         if(Boolean.parseBoolean(intent.getStringExtra("backNavigation"))){
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
-            cdd.show();
+//            CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
+            CategoryDialog categoryDialog = new CategoryDialog();
+            categoryDialog.show(getSupportFragmentManager(),"category dialog");
         }
         //FAB onClick
         mFAB.setOnClickListener(v -> {
@@ -116,9 +120,11 @@ public class HomeActivity extends AppCompatActivity {
 //                    Dialog dialog = new Dialog(layoutBottomSheet.getContext());
 //                    dialog.setContentView(R.layout.task_category_dialog);
 //                    dialog.show();
-                    CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
-                    cdd.show();
+                    CategoryDialog cdd= new CategoryDialog();
+                    cdd.show(getSupportFragmentManager(),"category dialog");
                 });
+                //get category name
+
                 //Flag Priority onClick
                 ImageView flag = layoutBottomSheet.findViewById(R.id.priority_todo_button);
                 priorityRadioGroup = layoutBottomSheet.findViewById(R.id.radioGroup_priority);
@@ -244,5 +250,10 @@ public class HomeActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void finish(String result) {
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
 }
