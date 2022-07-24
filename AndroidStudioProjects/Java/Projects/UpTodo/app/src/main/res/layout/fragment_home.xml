@@ -131,6 +131,12 @@
             app:layout_constraintTop_toBottomOf="@+id/searchBar"
             app:layout_constraintVertical_bias="0.0" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="searchBar" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
