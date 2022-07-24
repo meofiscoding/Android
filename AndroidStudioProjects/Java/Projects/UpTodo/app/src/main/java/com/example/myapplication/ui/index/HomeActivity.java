@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -61,7 +62,6 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
     private EditText description_txt;
     private Date dueDate;
     private ChipGroup category_tag;
-    private Chip chip;
     protected Priority priority;
     protected String categoryName;
 
@@ -127,13 +127,6 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 });
                 //Display category name
                 category_tag = layoutBottomSheet.findViewById(R.id.chip_group);
-                chip = (Chip) this.getLayoutInflater().inflate(R.layout.single_category_chip_layout,null,false);
-                //Chip close onClick
-                chip.setOnCloseIconClickListener(v12 -> {
-                    category_tag.removeView(chip);
-                    categoryName = null;
-                    Toast.makeText(layoutBottomSheet.getContext(), chip.getText().toString() + "removed", Toast.LENGTH_SHORT).show();
-                });
                 //Flag Priority onClick
                 ImageView flag = layoutBottomSheet.findViewById(R.id.priority_todo_button);
                 priorityRadioGroup = layoutBottomSheet.findViewById(R.id.radioGroup_priority);
@@ -202,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
                     String description = description_txt.getText().toString().trim();
-                    if (!TextUtils.isEmpty(task) && !categoryName.isEmpty()) {
+                    if (!TextUtils.isEmpty(task) && categoryName != null) {
                         Task myTask = new Task(task, description, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
                         taskDAO.add(myTask).addOnSuccessListener((success) -> {
                                     Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
@@ -273,6 +266,13 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
     @Override
     public void finish(String result) {
         categoryName = result;
+        final Chip chip = (Chip) LayoutInflater.from(layoutBottomSheet.getContext()).inflate(R.layout.single_category_chip_layout, null, false);
         chip.setText(categoryName);
+        //Chip close onClick
+        chip.setOnCloseIconClickListener(v12 -> {
+            category_tag.removeView(chip);
+            categoryName = null;
+            Toast.makeText(layoutBottomSheet.getContext(), chip.getText().toString() + "removed", Toast.LENGTH_SHORT).show();
+        });
     }
 }
