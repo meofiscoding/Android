@@ -2,7 +2,6 @@ package com.example.myapplication.ui.index;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -37,6 +36,7 @@ import com.example.myapplication.model.Priority;
 import com.example.myapplication.model.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,16 +60,19 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
     private ImageView saveButton;
     private EditText description_txt;
     private Date dueDate;
+    private ChipGroup category_tag;
+    private Chip chip;
     protected Priority priority;
     protected String categoryName;
-    private CategoryDialog cdd;
+
+
     Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Binding
-        com.example.myapplication.databinding.ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
         replaceFragment(new HomeFragment());
@@ -83,11 +86,11 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
         bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
         //get intent back navigation
         Intent intent = getIntent();
-        if(Boolean.parseBoolean(intent.getStringExtra("backNavigation"))){
+        if (Boolean.parseBoolean(intent.getStringExtra("backNavigation"))) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 //            CategoryDialog cdd = new CategoryDialog(layoutBottomSheet.getContext());
             CategoryDialog categoryDialog = new CategoryDialog();
-            categoryDialog.show(getSupportFragmentManager(),"category dialog");
+            categoryDialog.show(getSupportFragmentManager(), "category dialog");
         }
         //FAB onClick
         mFAB.setOnClickListener(v -> {
@@ -105,7 +108,6 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                         minutes = minute;
                         //Set hours and minutes
                         calendar.set(0, 0, 0, hours, minutes);
-                        //Set selected time on textview
                         //...
                     }, 12, 0, false
                     );
@@ -120,11 +122,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
 //                    Dialog dialog = new Dialog(layoutBottomSheet.getContext());
 //                    dialog.setContentView(R.layout.task_category_dialog);
 //                    dialog.show();
-                    CategoryDialog cdd= new CategoryDialog();
-                    cdd.show(getSupportFragmentManager(),"category dialog");
+                    CategoryDialog cdd = new CategoryDialog();
+                    cdd.show(getSupportFragmentManager(), "category dialog");
                 });
-                //get category name
-
+                //Display category name
+                category_tag = layoutBottomSheet.findViewById(R.id.chip_group);
+                chip = (Chip) this.getLayoutInflater().inflate(R.layout.single_category_chip_layout,null,false);
+                //Chip close onClick
+                chip.setOnCloseIconClickListener(v12 -> {
+                    category_tag.removeView(chip);
+                    categoryName = null;
+                    Toast.makeText(layoutBottomSheet.getContext(), chip.getText().toString() + "removed", Toast.LENGTH_SHORT).show();
+                });
                 //Flag Priority onClick
                 ImageView flag = layoutBottomSheet.findViewById(R.id.priority_todo_button);
                 priorityRadioGroup = layoutBottomSheet.findViewById(R.id.radioGroup_priority);
@@ -170,7 +179,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 Chip tomorrow = layoutBottomSheet.findViewById(R.id.tomorrow_chip);
                 tomorrow.setOnClickListener(view4 -> {
                     //set data for today
-                    calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                    calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), hours, minutes);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                     calendarView.setDate(calendar.getTime().getTime(), true, true);
                     dueDate = calendar.getTime();
@@ -193,10 +202,19 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
                     String description = description_txt.getText().toString().trim();
-                    if (!TextUtils.isEmpty(task) && dueDate != null) {
-                        Task myTask = new Task(task, description, priority, dueDate, Calendar.getInstance().getTime(), false, new Category("University"));
-                        taskDAO.add(myTask).addOnSuccessListener(success -> Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show())
+                    if (!TextUtils.isEmpty(task) && !categoryName.isEmpty()) {
+                        Task myTask = new Task(task, description, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
+                        taskDAO.add(myTask).addOnSuccessListener((success) -> {
+                                    Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                                })
                                 .addOnFailureListener(err -> Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show());
+                    } else {
+                        if (TextUtils.isEmpty(task)) {
+                            Toast.makeText(layoutBottomSheet.getContext(), "Please choose enter Task name", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(layoutBottomSheet.getContext(), "Please choose one category", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             } else {
@@ -254,6 +272,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
 
     @Override
     public void finish(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        categoryName = result;
+        chip.setText(categoryName);
     }
 }

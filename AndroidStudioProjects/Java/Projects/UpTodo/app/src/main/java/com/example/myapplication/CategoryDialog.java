@@ -15,7 +15,6 @@ import androidx.fragment.app.DialogFragment;
 
 public class CategoryDialog extends DialogFragment implements android.view.View.OnClickListener {
     private Button getAddCategory;
-    private Context c;
     private OnMyDialogResult mDialogResult; // the callback
 
     @Override
@@ -64,52 +63,52 @@ public class CategoryDialog extends DialogFragment implements android.view.View.
                 categoryName = "Grocery";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.work:
                 categoryName = "Work";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.sport:
                 categoryName = "Sport";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.design:
                 categoryName = "Design";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.university:
                 categoryName = "University";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.social:
                 categoryName = "Social";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.music:
                 categoryName = "Music";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.health:
                 categoryName = "Health";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.movie:
                 categoryName = "Movie";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.home:
                 categoryName = "Home";
                 mDialogResult.finish(categoryName);
                 this.dismiss();
-                break;
+                 break;
             case R.id.createnew:
                 Intent intent = new Intent();
                 intent.setClass(v.getContext(), New_Category.class);
