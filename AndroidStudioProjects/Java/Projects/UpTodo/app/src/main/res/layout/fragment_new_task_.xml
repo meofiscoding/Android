@@ -167,7 +167,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/dueDate"
         android:layout_width="244dp"
         android:layout_height="33dp"
         android:gravity="center_horizontal"
@@ -215,7 +215,7 @@
         app:layout_constraintEnd_toEndOf="@+id/tomorrow_chip"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tomorrow_chip"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/dueDate" />
 
     <CalendarView
         android:id="@+id/calendar_view"
@@ -237,20 +237,20 @@
         android:layout_width="280dp"
         android:layout_height="0dp"
         android:visibility="visible"
-        app:constraint_referenced_ids="calendar_view,next_week_chip,tomorrow_chip,today_chip,textView"
+        app:constraint_referenced_ids="calendar_view,next_week_chip,tomorrow_chip,today_chip,dueDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description">
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/dueDate"
+        app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+        app:layout_constraintStart_toEndOf="@id/priority_todo_button"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintVertical_bias="0.23000002">
 
     </com.google.android.material.chip.ChipGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

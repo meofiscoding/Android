@@ -3,6 +3,7 @@ package com.example.myapplication.ui.index;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -266,13 +268,16 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
     @Override
     public void finish(String result) {
         categoryName = result;
-        final Chip chip = (Chip) LayoutInflater.from(layoutBottomSheet.getContext()).inflate(R.layout.single_category_chip_layout, null, false);
+        Chip chip = new Chip(layoutBottomSheet.getContext());
         chip.setText(categoryName);
-        //Chip close onClick
-        chip.setOnCloseIconClickListener(v12 -> {
-            category_tag.removeView(chip);
-            categoryName = null;
-            Toast.makeText(layoutBottomSheet.getContext(), chip.getText().toString() + "removed", Toast.LENGTH_SHORT).show();
+        chip.setChipBackgroundColor(AppCompatResources.getColorStateList(layoutBottomSheet.getContext(), R.color.primary));
+        chip.setCloseIcon(getDrawable(R.drawable.ic_baseline_clear_24));
+        chip.setCloseIconVisible(true);
+        //onClose chip
+        chip.setOnCloseIconClickListener(v -> {
+             category_tag.removeView(v);
+             categoryName = null;
         });
+        category_tag.addView(chip);
     }
 }
