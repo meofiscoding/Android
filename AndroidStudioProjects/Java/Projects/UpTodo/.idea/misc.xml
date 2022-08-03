@@ -54,7 +54,7 @@
         <entry key="app/src/main/res/layout/fragment_on_boarding2.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_on_boarding3.xml" value="0.1681625366210937" />
         <entry key="app/src/main/res/layout/fragment_today_task.xml" value="0.21510416666666668" />
-        <entry key="app/src/main/res/layout/newtask_row.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/newtask_row.xml" value="0.1" />
         <entry key="app/src/main/res/layout/single_category_chip_layout.xml" value="0.2687058068755873" />
         <entry key="app/src/main/res/layout/single_input_chip_chip_layout.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/layout/task_category_dialog.xml" value="0.1" />
