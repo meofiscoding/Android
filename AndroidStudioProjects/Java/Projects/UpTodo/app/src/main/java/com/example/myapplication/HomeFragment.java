@@ -1,18 +1,23 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.example.myapplication.adapter.TaskAdapter;
+import com.example.myapplication.model.Task;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView;
+    TaskAdapter taskAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -30,6 +35,10 @@ public class HomeFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        FirebaseRecyclerOptions<Task> options = new FirebaseRecyclerOptions.Builder<Task>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Task"), Task.class)
+                .build();
+
         return root;
     }
 }

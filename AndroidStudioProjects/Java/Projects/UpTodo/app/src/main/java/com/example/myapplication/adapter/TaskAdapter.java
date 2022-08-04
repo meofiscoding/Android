@@ -15,6 +15,7 @@ import com.example.myapplication.model.Task;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.chip.Chip;
+import com.skybase.humanizer.DateHumanizer;
 
 public class TaskAdapter extends FirebaseRecyclerAdapter<Task, TaskAdapter.myViewHolder> {
 
@@ -32,6 +33,7 @@ public class TaskAdapter extends FirebaseRecyclerAdapter<Task, TaskAdapter.myVie
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
         holder.taskTittle.setText(model.getTask());
         holder.categoryName.setText(model.getCategory().categoryName);
+        holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(),DateHumanizer.TYPE_PRETTY_EVERYTHING));
         //humanizer dateTime
         //holder.timastamp
     }
