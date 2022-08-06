@@ -4,28 +4,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.adapter.TaskAdapter;
 import com.example.myapplication.model.Task;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.chip.Chip;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.skybase.humanizer.DateHumanizer;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    TaskAdapter taskAdapter;
+    private RecyclerView recyclerView;
+    private DatabaseReference tasksRef;
 
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -33,12 +35,61 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
+        //Get recycler task View
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView2);
+//        //Set layout manager for Fragment view
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Task");
+//        System.out.println(FirebaseDatabase.getInstance().getReference());
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         FirebaseRecyclerOptions<Task> options = new FirebaseRecyclerOptions.Builder<Task>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("Task"), Task.class)
+                .setQuery(tasksRef, Task.class)
                 .build();
 
-        return root;
+        FirebaseRecyclerAdapter<Task, myViewHolder> adapter = new FirebaseRecyclerAdapter<Task, myViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
+                holder.taskTittle.setText(model.getTask());
+//                holder.categoryName.setText(model.getCategory().categoryName);
+//                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
+                //humanizer dateTime
+                //holder.timastamp
+            }
+
+            @NonNull
+            @Override
+            public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.newtask_row, parent, false);
+                myViewHolder viewHolder = new myViewHolder(view);
+                return viewHolder;
+            }
+        };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+    public static class myViewHolder extends RecyclerView.ViewHolder {
+        RadioButton checkButton;
+        TextView taskTittle;
+        TextView timeStamp;
+        ImageView priority_flag;
+        Chip categoryName;
+
+        public myViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            checkButton = (RadioButton) itemView.findViewById(R.id.check_button);
+            taskTittle = (TextView) itemView.findViewById(R.id.taskName);
+            timeStamp = (TextView) itemView.findViewById(R.id.endDate);
+            priority_flag = (ImageView) itemView.findViewById(R.id.priority_flag);
+            categoryName = (Chip) itemView.findViewById(R.id.categoryName);
+        }
+
     }
 }

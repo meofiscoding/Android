@@ -3,6 +3,9 @@ package com.example.myapplication.model;
 public class Category {
     public String categoryName;
 
+    public Category() {
+    }
+
     @Override
     public String toString() {
         return "Category{" +

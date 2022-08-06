@@ -274,7 +274,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
         chip.setCloseIcon(getDrawable(R.drawable.ic_baseline_clear_24));
         chip.setCloseIconVisible(true);
         //onClose chip
-        chip.setOnCloseIconClickListener(v -> {
+         chip.setOnCloseIconClickListener(v -> {
              category_tag.removeView(v);
              categoryName = null;
         });

@@ -11,6 +11,9 @@ public class Task {
     public boolean isDone;
     public Category category;
 
+    public Task() {
+    }
+
     public Task(String task, String description, Priority priority, Date dueDate, Date createdDate, boolean isDone, Category category) {
         this.task = task;
         this.description = description;
