@@ -47,7 +47,7 @@
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.23049570719401047" />
         <entry key="app/src/main/res/layout/fragment_completed_task.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/layout/fragment_focuse.xml" value="0.21510416666666668" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1509433962264151" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_new__task.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_new_task_.xml" value="0.2912948608398438" />
         <entry key="app/src/main/res/layout/fragment_on_boarding1.xml" value="0.1901504516601563" />

@@ -48,7 +48,8 @@ public class HomeFragment extends Fragment {
         listTask = (Group) root.findViewById(R.id.task_list);
 //        //Set layout manager for Fragment view
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Task");
+        completeTask.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Task");
 //        System.out.println(FirebaseDatabase.getInstance().getReference());
         return root;
     }
@@ -57,12 +58,12 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         FirebaseRecyclerOptions<Task> options = new FirebaseRecyclerOptions.Builder<Task>()
-                .setQuery(tasksRef.orderByChild("isDone"), Task.class)
+                .setQuery(tasksRef.orderByChild("isDone").equalTo(false), Task.class)
                 .build();
 
         //Option for Complete Task
         FirebaseRecyclerOptions<Task> optionsComplete = new FirebaseRecyclerOptions.Builder<Task>()
-                .setQuery(tasksRef.orderByChild("isDone").equalTo("true"), Task.class)
+                .setQuery(tasksRef.orderByChild("isDone").equalTo(true), Task.class)
                 .build();
 
         FirebaseRecyclerAdapter<Task, myViewHolder> adapter = new FirebaseRecyclerAdapter<Task, myViewHolder>(options) {
