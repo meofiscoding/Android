@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Task {
     public String task;
-    public String description;
     public Priority priority;
     public Date dueDate;
     public Date createdDate;
@@ -14,9 +13,8 @@ public class Task {
     public Task() {
     }
 
-    public Task(String task, String description, Priority priority, Date dueDate, Date createdDate, boolean isDone, Category category) {
+    public Task(String task, Priority priority, Date dueDate, Date createdDate, boolean isDone, Category category) {
         this.task = task;
-        this.description = description;
         this.priority = priority;
         this.dueDate = dueDate;
         this.createdDate = createdDate;
@@ -28,7 +26,6 @@ public class Task {
     public String toString() {
         return "Task{" +
                 ", task='" + task + '\'' +
-                ", description='" + description + '\'' +
                 ", priority=" + priority +
                 ", dueDate=" + dueDate +
                 ", createdDate=" + createdDate +
@@ -44,14 +41,6 @@ public class Task {
 
     public void setTask(String task) {
         this.task = task;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Priority getPriority() {

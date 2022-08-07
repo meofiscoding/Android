@@ -69,7 +69,7 @@
     <string name="add_task">Add Task</string>
     <string name="settime">setTime</string>
     <string name="finish">finish</string>
-    <string name="description">Description</string>
+    <string name="category">Category: </string>
     <string name="flag">flag</string>
     <string name="next_week">Next Week</string>
     <string name="due_date">Due Date</string>

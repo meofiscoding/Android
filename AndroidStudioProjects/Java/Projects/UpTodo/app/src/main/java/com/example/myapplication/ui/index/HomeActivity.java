@@ -3,15 +3,12 @@ package com.example.myapplication.ui.index;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -61,12 +58,10 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
     private CalendarView calendarView;
     private TextView enter_todo_txt;
     private ImageView saveButton;
-    private EditText description_txt;
     private Date dueDate;
     private ChipGroup category_tag;
     protected Priority priority;
     protected String categoryName;
-
 
     Calendar calendar = Calendar.getInstance();
 
@@ -157,7 +152,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 calendarView.setOnDateChangeListener((calendarView, year, month, dayOfMoth) -> {
                     //Set clean state of calendar
                     calendar.clear();
-                    calendar.set(year, month, dayOfMoth);
+                    calendar.set(year, month + 1, dayOfMoth);
                     dueDate = calendar.getTime();
                 });
                 //SendBtn onCLick
@@ -190,20 +185,22 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 });
                 //Assign variable
                 enter_todo_txt = layoutBottomSheet.findViewById(R.id.enter_cate_name);
-                description_txt = layoutBottomSheet.findViewById(R.id.description);
                 saveButton = layoutBottomSheet.findViewById(R.id.saveBtn);
                 //Assign and Init TaskDAO
                 TaskDAO taskDAO = new TaskDAO();
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
-                    String description = description_txt.getText().toString().trim();
                     if (!TextUtils.isEmpty(task) && categoryName != null) {
-                        Task myTask = new Task(task, description, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
+                        Task myTask = new Task(task, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
                         taskDAO.add(myTask).addOnSuccessListener((success) -> {
                                     Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
                                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                                 })
                                 .addOnFailureListener(err -> Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show());
+                        //Remove all chip in chipGroup and Clear Input
+                        category_tag.removeAllViews();
+                        enter_todo_txt.setText("");
+                        priorityRadioGroup.setVisibility(View.GONE);
                     } else {
                         if (TextUtils.isEmpty(task)) {
                             Toast.makeText(layoutBottomSheet.getContext(), "Please choose enter Task name", Toast.LENGTH_SHORT).show();
@@ -267,16 +264,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
 
     @Override
     public void finish(String result) {
+        category_tag.removeAllViews();
         categoryName = result;
         Chip chip = new Chip(layoutBottomSheet.getContext());
         chip.setText(categoryName);
+        chip.setTextColor(AppCompatResources.getColorStateList(layoutBottomSheet.getContext(), R.color.white));
         chip.setChipBackgroundColor(AppCompatResources.getColorStateList(layoutBottomSheet.getContext(), R.color.primary));
         chip.setCloseIcon(getDrawable(R.drawable.ic_baseline_clear_24));
         chip.setCloseIconVisible(true);
         //onClose chip
-         chip.setOnCloseIconClickListener(v -> {
-             category_tag.removeView(v);
-             categoryName = null;
+        chip.setOnCloseIconClickListener(v -> {
+            category_tag.removeView(v);
+            categoryName = null;
         });
         category_tag.addView(chip);
     }
