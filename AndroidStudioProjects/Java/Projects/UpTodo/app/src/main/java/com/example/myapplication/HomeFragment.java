@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
@@ -17,12 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.model.Task;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -77,6 +82,7 @@ public class HomeFragment extends Fragment {
                             listTask.setVisibility(View.VISIBLE);
                             //do sth
                         }
+                        holder.checkButton.setChecked(false);
                     }
 
                     @Override
@@ -86,6 +92,23 @@ public class HomeFragment extends Fragment {
                 });
 
                 holder.taskTittle.setText(model.getTask());
+                holder.checkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("isDone", true);
+                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                .getReference("Task")
+                                .child(getRef(holder.getAdapterPosition()).getKey())
+                                .updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
 //                holder.categoryName.setText(model.getCategory().categoryName);
 //                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
                 //humanizer dateTime
@@ -108,6 +131,7 @@ public class HomeFragment extends Fragment {
                 tasksRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        holder.checkButton.setChecked(false);
                     }
 
                     @Override
@@ -117,6 +141,24 @@ public class HomeFragment extends Fragment {
                 });
 
                 holder.taskTittle.setText(model.getTask());
+
+                holder.checkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("isDone", false);
+                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                .getReference("Task")
+                                .child(getRef(holder.getAdapterPosition()).getKey())
+                                .updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(holder.itemView.getContext(), "Task incompleted:(", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
 //                holder.categoryName.setText(model.getCategory().categoryName);
 //                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
                 //humanizer dateTime

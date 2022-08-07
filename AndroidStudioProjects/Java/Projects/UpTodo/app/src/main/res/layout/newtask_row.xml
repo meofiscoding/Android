@@ -15,7 +15,7 @@
         <RadioButton
             android:id="@+id/check_button"
             android:layout_width="48dp"
-            android:layout_height="39dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:buttonTint="@color/white"
             android:padding="0dp"
