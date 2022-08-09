@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -36,6 +40,12 @@ public class HomeFragment extends Fragment {
     private DatabaseReference tasksRef;
     private Group emptyTask;
     private Group listTask;
+    private EditText searchBar;
+    private boolean incompleteEmpty;
+    private boolean completeEmpty;
+    private String search;
+    private Query optionIncomplete;
+    private Query optionComplete;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -51,24 +61,51 @@ public class HomeFragment extends Fragment {
         completeTask = (RecyclerView) root.findViewById(R.id.complete_taskList);
         emptyTask = (Group) root.findViewById(R.id.emptyTask);
         listTask = (Group) root.findViewById(R.id.task_list);
-//        //Set layout manager for Fragment view
+        if (incompleteEmpty && completeEmpty) {
+            emptyTask.setVisibility(View.VISIBLE);
+            listTask.setVisibility(View.GONE);
+        }
+        //Set layout manager for Fragment view
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
         completeTask.setLayoutManager(new LinearLayoutManager(root.getContext()));
         tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Task");
-//        System.out.println(FirebaseDatabase.getInstance().getReference());
+        searchBar = (EditText) root.findViewById(R.id.searchBar);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                search = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return root;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        optionIncomplete = tasksRef.orderByChild("isDone").equalTo(false);
+        optionComplete = tasksRef.orderByChild("isDone").equalTo(true);
+        if (search != null) {
+            optionIncomplete = optionIncomplete.orderByChild("task").startAt(search).endAt(search+"\uf8ff");
+            optionComplete = optionComplete.orderByChild("task").startAt(search).endAt(search+"\uf8ff");
+        }
+
         FirebaseRecyclerOptions<Task> options = new FirebaseRecyclerOptions.Builder<Task>()
-                .setQuery(tasksRef.orderByChild("isDone").equalTo(false), Task.class)
+                .setQuery(optionIncomplete, Task.class)
                 .build();
 
         //Option for Complete Task
         FirebaseRecyclerOptions<Task> optionsComplete = new FirebaseRecyclerOptions.Builder<Task>()
-                .setQuery(tasksRef.orderByChild("isDone").equalTo(true), Task.class)
+                .setQuery(optionComplete, Task.class)
                 .build();
 
         FirebaseRecyclerAdapter<Task, myViewHolder> adapter = new FirebaseRecyclerAdapter<Task, myViewHolder>(options) {
@@ -81,6 +118,8 @@ public class HomeFragment extends Fragment {
                             emptyTask.setVisibility(View.GONE);
                             listTask.setVisibility(View.VISIBLE);
                             //do sth
+                        } else {
+                            incompleteEmpty = true;
                         }
                         holder.checkButton.setChecked(false);
                     }
@@ -131,6 +170,12 @@ public class HomeFragment extends Fragment {
                 tasksRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChildren()) {
+                            emptyTask.setVisibility(View.GONE);
+                            listTask.setVisibility(View.VISIBLE);
+                        } else {
+                            completeEmpty = true;
+                        }
                         holder.checkButton.setChecked(false);
                     }
 
