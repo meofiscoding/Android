@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,10 +35,13 @@ import com.example.myapplication.databinding.ActivityHomeBinding;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Priority;
 import com.example.myapplication.model.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -71,6 +75,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
         //Binding
         ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //Implement AppCheck
+        FirebaseAppCheck firebaseappcheck = FirebaseAppCheck.getInstance();
+        firebaseappcheck.installAppCheckProviderFactory(SafetyNetAppCheckProviderFactory.getInstance());
         mAuth = FirebaseAuth.getInstance();
         replaceFragment(new HomeFragment());
         //onClick button to show layoutBottomSheet
@@ -192,15 +199,26 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                     String task = enter_todo_txt.getText().toString().trim();
                     if (!TextUtils.isEmpty(task) && categoryName != null) {
                         Task myTask = new Task(task, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
-                        taskDAO.add(myTask).addOnSuccessListener((success) -> {
+//                        taskDAO.add(myTask).addOnSuccessListener((success) -> {
+//                                    Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
+//                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                                })
+//                                .addOnFailureListener(err -> Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show());
+                        taskDAO.add(myTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                                if (task.isSuccessful()) {
                                     Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
                                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                                })
-                                .addOnFailureListener(err -> Toast.makeText(layoutBottomSheet.getContext(), err.getMessage(), Toast.LENGTH_SHORT).show());
-                        //Remove all chip in chipGroup and Clear Input
-                        category_tag.removeAllViews();
-                        enter_todo_txt.setText("");
-                        priorityRadioGroup.setVisibility(View.GONE);
+                                } else {
+                                    Toast.makeText(layoutBottomSheet.getContext(), "task added error", Toast.LENGTH_SHORT).show();
+                                }
+                                //Remove all chip in chipGroup and Clear Input
+                                category_tag.removeAllViews();
+                                enter_todo_txt.setText("");
+                                priorityRadioGroup.setVisibility(View.GONE);
+                            }
+                        });
                     } else {
                         if (TextUtils.isEmpty(task)) {
                             Toast.makeText(layoutBottomSheet.getContext(), "Please choose enter Task name", Toast.LENGTH_SHORT).show();

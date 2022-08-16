@@ -126,8 +126,7 @@
                 app:layout_constraintBottom_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/today_task"
@@ -193,12 +192,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="411dp"
                 android:layout_marginBottom="726dp"
+                android:visibility="gone"
                 app:constraint_referenced_ids="searchBar,recyclerView2,today_task,complete_taskList,completed_task"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>

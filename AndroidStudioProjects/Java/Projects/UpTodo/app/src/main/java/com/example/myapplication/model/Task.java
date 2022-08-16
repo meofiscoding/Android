@@ -1,12 +1,15 @@
 package com.example.myapplication.model;
 
-import java.util.Date;
+import com.google.firebase.firestore.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
 
+import java.util.Date;
+@IgnoreExtraProperties
 public class Task {
     public String task;
     public Priority priority;
     public Date dueDate;
-    public Date createdDate;
+    public @ServerTimestamp Date createdDate;
     public boolean isDone;
     public Category category;
 
