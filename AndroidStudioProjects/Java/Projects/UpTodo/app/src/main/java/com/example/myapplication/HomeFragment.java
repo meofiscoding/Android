@@ -126,9 +126,8 @@ public class HomeFragment extends Fragment {
                             incompleteEmpty = false;
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for (DocumentSnapshot d : list) {
-                                Task task = d.toObject(Task.class);
-                                taskArrayList.add(task);
-                                System.out.println(taskArrayList.size());
+                                  Task task = d.toObject(Task.class);
+                                  taskArrayList.add(task);
                             }
                             notifyDataSetChanged();
                             holder.checkButton.setChecked(false);
