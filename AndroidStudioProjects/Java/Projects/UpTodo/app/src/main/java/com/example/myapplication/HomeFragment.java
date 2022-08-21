@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
@@ -19,24 +18,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.model.Task;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -68,11 +60,13 @@ public class HomeFragment extends Fragment {
         emptyTask = (Group) root.findViewById(R.id.emptyTask);
         listTask = (Group) root.findViewById(R.id.task_list);
         //Set layout manager for Fragment view
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
         completeTask.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
 //        tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Task");
         db = FirebaseFirestore.getInstance();
+        taskArrayList = new ArrayList<>();
         searchBar = (EditText) root.findViewById(R.id.searchBar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -103,7 +97,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        taskArrayList = new ArrayList<Task>();
         optionIncomplete = db.collection("Task").whereEqualTo("isDone", false);
         optionComplete = db.collection("Task").whereEqualTo("isDone", true);
         //Option for inComplete Task
@@ -116,47 +109,33 @@ public class HomeFragment extends Fragment {
                 .build();
 
 
+        //adapter part
         FirestoreRecyclerAdapter<Task, myViewHolder> adapter = new FirestoreRecyclerAdapter<Task, myViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                optionIncomplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            incompleteEmpty = false;
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                  Task task = d.toObject(Task.class);
-                                  taskArrayList.add(task);
-                            }
-                            notifyDataSetChanged();
-                            holder.checkButton.setChecked(false);
-                        }else{
-                            incompleteEmpty = true;
-                        }
-                    }
-                });
-
+                model = taskArrayList.get(position);
                 holder.taskTittle.setText(model.getTask());
-                holder.checkButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
-//                        Map<String, Object> map = new HashMap<>();
-//                        map.put("isDone", true);
-//                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
-//                                .getReference("Task")
-//                                .child(getRef(holder.getAdapterPosition()).getKey())
-//                                .updateChildren(map)
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                        Task task = new
-                    }
-                });
+
+                //Radio button onClick
+//                holder.checkButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
+////                        Map<String, Object> map = new HashMap<>();
+////                        map.put("isDone", true);
+////                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
+////                                .getReference("Task")
+////                                .child(getRef(holder.getAdapterPosition()).getKey())
+////                                .updateChildren(map)
+////                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+////                                    @Override
+////                                    public void onSuccess(Void unused) {
+////                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
+////                                    }
+////                                });
+////                        Task task = new
+//                    }
+//                });
 //                holder.categoryName.setText(model.getCategory().categoryName);
 //                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
                 //humanizer dateTime
@@ -170,8 +149,29 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
+
+            @Override
+            public int getItemCount() {
+                return taskArrayList.size();
+            }
         };
 
+        optionIncomplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    incompleteEmpty = false;
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d : list) {
+                        Task task = d.toObject(Task.class);
+                        taskArrayList.add(task);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    incompleteEmpty = true;
+                }
+            }
+        });
 //        Adapter for Complete Task
         FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
             @Override
@@ -187,7 +187,7 @@ public class HomeFragment extends Fragment {
                                 taskArrayList.add(task);
                             }
                             notifyDataSetChanged();
-                        }else{
+                        } else {
                             completeEmpty = true;
                         }
                         holder.checkButton.setChecked(false);
