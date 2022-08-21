@@ -70,13 +70,14 @@
                 android:background="@drawable/category_edt_text"
                 android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:ems="10"
+                android:hint="Search for your task..."
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:hint="Search for your task..."
                 android:textColor="@color/gray_100"
+                android:textColorHint="@color/gray_100"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.283"
@@ -139,10 +140,10 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@id/recyclerView2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.09"
+                app:layout_constraintHorizontal_bias="0.075"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/searchBar"
-                app:layout_constraintVertical_bias="0.0"></Button>
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/completed_task"
@@ -157,11 +158,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.09"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView2"></Button>
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/complete_taskList"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
@@ -174,14 +175,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView2"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@id/completed_task"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/today_task"
                 app:layout_constraintVertical_bias="0.0" />
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="411dp"
                 android:layout_marginBottom="726dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:constraint_referenced_ids="searchBar,recyclerView2,today_task,complete_taskList,completed_task"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

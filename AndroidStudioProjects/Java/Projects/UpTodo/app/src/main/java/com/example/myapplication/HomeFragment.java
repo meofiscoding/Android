@@ -20,18 +20,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.model.Task;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
@@ -47,7 +51,7 @@ public class HomeFragment extends Fragment {
     private String search;
     private Query optionIncomplete;
     private Query optionComplete;
-    private ArrayList<Task> taskArrayList;
+    private List<Task> taskArrayList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,41 +103,38 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        taskArrayList = new ArrayList<>();
-        optionIncomplete = db.collection("Task").whereEqualTo("isDone",false);
-        optionComplete = db.collection("Task").whereEqualTo("isDone",true);
-//        if (search != null) {
-//            optionIncomplete = optionIncomplete.("task").startAt(search).endAt(search + "\uf8ff");
-//            optionComplete = optionComplete.orderByChild("task").startAt(search).endAt(search + "\uf8ff");
-//        }
-
-        FirebaseRecyclerOptions<Task> options = new FirebaseRecyclerOptions.Builder<Task>()
+        taskArrayList = new ArrayList<Task>();
+        optionIncomplete = db.collection("Task").whereEqualTo("isDone", false);
+        optionComplete = db.collection("Task").whereEqualTo("isDone", true);
+        //Option for inComplete Task
+        FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
                 .setQuery(optionIncomplete, Task.class)
                 .build();
-
-        //Option for Complete Task
-        FirebaseRecyclerOptions<Task> optionsComplete = new FirebaseRecyclerOptions.Builder<Task>()
+//        //Option for Complete Task
+        FirestoreRecyclerOptions<Task> optionsComplete = new FirestoreRecyclerOptions.Builder<Task>()
                 .setQuery(optionComplete, Task.class)
                 .build();
 
-        FirebaseRecyclerAdapter<Task, myViewHolder> adapter = new FirebaseRecyclerAdapter<Task, myViewHolder>(options) {
+
+        FirestoreRecyclerAdapter<Task, myViewHolder> adapter = new FirestoreRecyclerAdapter<Task, myViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                tasksRef.addValueEventListener(new ValueEventListener() {
+                optionIncomplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChildren()) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
                             incompleteEmpty = false;
-                            //do sth
-                        } else {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                Task task = d.toObject(Task.class);
+                                taskArrayList.add(task);
+                                System.out.println(taskArrayList.size());
+                            }
+                            notifyDataSetChanged();
+                            holder.checkButton.setChecked(false);
+                        }else{
                             incompleteEmpty = true;
                         }
-                        holder.checkButton.setChecked(false);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 
@@ -141,18 +142,20 @@ public class HomeFragment extends Fragment {
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("isDone", true);
-                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
-                                .getReference("Task")
-                                .child(getRef(holder.getAdapterPosition()).getKey())
-                                .updateChildren(map)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
+//                        Map<String, Object> map = new HashMap<>();
+//                        map.put("isDone", true);
+//                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
+//                                .getReference("Task")
+//                                .child(getRef(holder.getAdapterPosition()).getKey())
+//                                .updateChildren(map)
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                        Task task = new
                     }
                 });
 //                holder.categoryName.setText(model.getCategory().categoryName);
@@ -170,24 +173,25 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        //Adapter for Complete Task
-        FirebaseRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirebaseRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
+//        Adapter for Complete Task
+        FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                tasksRef.addValueEventListener(new ValueEventListener() {
+                optionComplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChildren()) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
                             completeEmpty = false;
-                        } else {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                Task task = d.toObject(Task.class);
+                                taskArrayList.add(task);
+                            }
+                            notifyDataSetChanged();
+                        }else{
                             completeEmpty = true;
                         }
                         holder.checkButton.setChecked(false);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 
@@ -196,18 +200,18 @@ public class HomeFragment extends Fragment {
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("isDone", false);
-                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
-                                .getReference("Task")
-                                .child(getRef(holder.getAdapterPosition()).getKey())
-                                .updateChildren(map)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(holder.itemView.getContext(), "Task incompleted:(", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+//                        Map<String, Object> map = new HashMap<>();
+//                        map.put("isDone", false);
+//                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
+//                                .getReference("Task")
+//                                .child(getRef(holder.getAdapterPosition()).getKey())
+//                                .updateChildren(map)
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//                                        Toast.makeText(holder.itemView.getContext(), "Task incompleted:(", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
                     }
                 });
 //                holder.categoryName.setText(model.getCategory().categoryName);
