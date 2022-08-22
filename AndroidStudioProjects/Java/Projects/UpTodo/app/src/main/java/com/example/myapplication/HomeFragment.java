@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.model.Task;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment {
     private Query optionIncomplete;
     private Query optionComplete;
     private List<Task> taskArrayList;
+    private List<Task> completeTaskArrayList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,6 +70,7 @@ public class HomeFragment extends Fragment {
 //        tasksRef = FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Task");
         db = FirebaseFirestore.getInstance();
         taskArrayList = new ArrayList<>();
+        completeTaskArrayList = new ArrayList<>();
         searchBar = (EditText) root.findViewById(R.id.searchBar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,8 +101,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        optionIncomplete = db.collection("Task").whereEqualTo("isDone", false);
-        optionComplete = db.collection("Task").whereEqualTo("isDone", true);
+        optionIncomplete = db.collection("Task").whereEqualTo("done", false);
+        optionComplete = db.collection("Task").whereEqualTo("done", true);
         //Option for inComplete Task
         FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
                 .setQuery(optionIncomplete, Task.class)
@@ -115,27 +119,28 @@ public class HomeFragment extends Fragment {
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
                 model = taskArrayList.get(position);
                 holder.taskTittle.setText(model.getTask());
-
+                holder.checkButton.setChecked(false);
                 //Radio button onClick
-//                holder.checkButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
-////                        Map<String, Object> map = new HashMap<>();
-////                        map.put("isDone", true);
-////                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
-////                                .getReference("Task")
-////                                .child(getRef(holder.getAdapterPosition()).getKey())
-////                                .updateChildren(map)
-////                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                    @Override
-////                                    public void onSuccess(Void unused) {
-////                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
-////                                    }
-////                                });
-////                        Task task = new
-//                    }
-//                });
+                holder.checkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
+                        db.collection("Task")
+                                .document(updateTask.getId())
+                                .set(new Task(updateTask.getTask(),updateTask.getPriority(),updateTask.getDueDate(),updateTask.getCreatedDate(),true,updateTask.getCategory()))
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(holder.itemView.getContext(),"Task completed!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(holder.itemView.getContext(),"Task completed error!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }) ;
+                    }
+                });
 //                holder.categoryName.setText(model.getCategory().categoryName);
 //                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
                 //humanizer dateTime
@@ -164,6 +169,7 @@ public class HomeFragment extends Fragment {
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot d : list) {
                         Task task = d.toObject(Task.class);
+                        task.setId(d.getId());
                         taskArrayList.add(task);
                     }
                     adapter.notifyDataSetChanged();
@@ -172,30 +178,15 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
+
+
 //        Adapter for Complete Task
         FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                optionComplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            completeEmpty = false;
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for (DocumentSnapshot d : list) {
-                                Task task = d.toObject(Task.class);
-                                taskArrayList.add(task);
-                            }
-                            notifyDataSetChanged();
-                        } else {
-                            completeEmpty = true;
-                        }
-                        holder.checkButton.setChecked(false);
-                    }
-                });
-
+                model = completeTaskArrayList.get(position);
                 holder.taskTittle.setText(model.getTask());
-
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -226,8 +217,32 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
+
+            @Override
+            public int getItemCount() {
+                return completeTaskArrayList.size();
+            }
         };
 
+        optionComplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    completeEmpty = false;
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d : list) {
+                        Task task = d.toObject(Task.class);
+                        completeTaskArrayList.add(task);
+                    }
+                    adapterComplete.notifyDataSetChanged();
+                } else {
+                    completeEmpty = true;
+                }
+            }
+        });
+
+
+        //Incomplete task
         recyclerView.setAdapter(adapter);
         adapter.startListening();
 

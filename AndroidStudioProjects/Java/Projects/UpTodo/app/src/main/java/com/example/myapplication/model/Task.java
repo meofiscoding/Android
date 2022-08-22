@@ -1,17 +1,37 @@
 package com.example.myapplication.model;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.IgnoreExtraProperties;
 import com.google.firebase.firestore.ServerTimestamp;
 
+import java.io.Serializable;
 import java.util.Date;
 @IgnoreExtraProperties
-public class Task {
-    public String task;
-    public Priority priority;
-    public Date dueDate;
-    public @ServerTimestamp Date createdDate;
-    public boolean isDone;
-    public Category category;
+// we have to implement our modal class
+// with serializable so that we can pass
+// our object class to new activity on
+// our item click of recycler view.
+public class Task implements Serializable {
+    private String task;
+    private Priority priority;
+    private Date dueDate;
+    private @ServerTimestamp Date createdDate;
+    private boolean isDone;
+    private Category category;
+
+    // we are using exclude because
+    // we are not saving our id
+    @Exclude
+    private String id;
+    // getter method for our id
+    public String getId() {
+        return id;
+    }
+
+    // setter method for our id
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Task() {
     }
