@@ -137,13 +137,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
+                        taskArrayList.remove(updateTask);
                         db.collection("Task")
                                 .document(updateTask.getId())
                                 .update("done", true)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        taskArrayList.remove(updateTask);
                                         Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -167,6 +167,12 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
+
+            @Override
+            public int getItemCount() {
+                System.out.println("task Arraylist size: " + taskArrayList.size());
+                return taskArrayList.size();
+            }
         };
 
 
@@ -185,13 +191,13 @@ public class HomeFragment extends Fragment {
                 }
 
                 if (!value.isEmpty()) {
+                    taskArrayList.clear();
                     incompleteEmpty = false;
                     List<DocumentSnapshot> list = value.getDocuments();
                     for (DocumentSnapshot d : list) {
                         Task task = d.toObject(Task.class);
                         task.setId(d.getId());
                         taskArrayList.add(task);
-                        System.out.println("list incomplete size: " + taskArrayList.size());
                     }
                     adapter.notifyDataSetChanged();
                 } else {
@@ -217,13 +223,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Task updateTask = completeTaskArrayList.get(holder.getBindingAdapterPosition());
+                        completeTaskArrayList.remove(updateTask);
                         db.collection("Task")
                                 .document(updateTask.getId())
                                 .update("done", false)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        completeTaskArrayList.remove(updateTask);
                                         Toast.makeText(holder.itemView.getContext(), "Task incompleted:(((", Toast.LENGTH_SHORT).show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -247,6 +253,12 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
+
+            @Override
+            public int getItemCount() {
+                System.out.println("Complete task Arraylist size: " + completeTaskArrayList.size());
+                return completeTaskArrayList.size();
+            }
         };
 
         optionComplete.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -264,13 +276,13 @@ public class HomeFragment extends Fragment {
                 }
 
                 if (!value.isEmpty()) {
+                    completeTaskArrayList.clear();
                     completeEmpty = false;
                     List<DocumentSnapshot> list = value.getDocuments();
                     for (DocumentSnapshot d : list) {
                         Task task = d.toObject(Task.class);
                         task.setId(d.getId());
                         completeTaskArrayList.add(task);
-                        System.out.println("list complete size: " + completeTaskArrayList.size());
                     }
                     adapterComplete.notifyDataSetChanged();
                 } else {
