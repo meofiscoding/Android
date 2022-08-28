@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +29,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -115,9 +122,14 @@ public class HomeFragment extends Fragment {
 
         //adapter part
         FirestoreRecyclerAdapter<Task, myViewHolder> adapter = new FirestoreRecyclerAdapter<Task, myViewHolder>(options) {
+
+            @Override
+            public void onDataChanged() {
+                System.out.println("data incomplete changed");
+            }
+
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                model = taskArrayList.get(position);
                 holder.taskTittle.setText(model.getTask());
                 holder.checkButton.setChecked(false);
                 //Radio button onClick
@@ -127,18 +139,19 @@ public class HomeFragment extends Fragment {
                         Task updateTask = taskArrayList.get(holder.getBindingAdapterPosition());
                         db.collection("Task")
                                 .document(updateTask.getId())
-                                .set(new Task(updateTask.getTask(),updateTask.getPriority(),updateTask.getDueDate(),updateTask.getCreatedDate(),true,updateTask.getCategory()))
+                                .update("done", true)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(holder.itemView.getContext(),"Task completed!!", Toast.LENGTH_SHORT).show();
+                                        taskArrayList.remove(updateTask);
+                                        Toast.makeText(holder.itemView.getContext(), "Task completed!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(holder.itemView.getContext(),"Task completed error!!", Toast.LENGTH_SHORT).show();
+                                        Log.w(TAG, "Error updating document", e);
                                     }
-                                }) ;
+                                });
                     }
                 });
 //                holder.categoryName.setText(model.getCategory().categoryName);
@@ -154,23 +167,31 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
-
-            @Override
-            public int getItemCount() {
-                return taskArrayList.size();
-            }
         };
 
-        optionIncomplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
+        optionIncomplete.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (!queryDocumentSnapshots.isEmpty()) {
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w(TAG, "Listen failed.", error);
+                    return;
+                }
+
+                for (QueryDocumentSnapshot doc : value) {
+                    if (doc.get("done").toString() == "false") {
+                        //Dosth
+                    }
+                }
+
+                if (!value.isEmpty()) {
                     incompleteEmpty = false;
-                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    List<DocumentSnapshot> list = value.getDocuments();
                     for (DocumentSnapshot d : list) {
                         Task task = d.toObject(Task.class);
                         task.setId(d.getId());
                         taskArrayList.add(task);
+                        System.out.println("list incomplete size: " + taskArrayList.size());
                     }
                     adapter.notifyDataSetChanged();
                 } else {
@@ -180,28 +201,37 @@ public class HomeFragment extends Fragment {
         });
 
 
-
 //        Adapter for Complete Task
         FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
+
+            @Override
+            public void onDataChanged() {
+                System.out.println("data complete task changed");
+            }
+
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
-                model = completeTaskArrayList.get(position);
                 holder.taskTittle.setText(model.getTask());
+                holder.checkButton.setChecked(false);
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Map<String, Object> map = new HashMap<>();
-//                        map.put("isDone", false);
-//                        FirebaseDatabase.getInstance("https://uptodo-122bf-default-rtdb.asia-southeast1.firebasedatabase.app")
-//                                .getReference("Task")
-//                                .child(getRef(holder.getAdapterPosition()).getKey())
-//                                .updateChildren(map)
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Toast.makeText(holder.itemView.getContext(), "Task incompleted:(", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
+                        Task updateTask = completeTaskArrayList.get(holder.getBindingAdapterPosition());
+                        db.collection("Task")
+                                .document(updateTask.getId())
+                                .update("done", false)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        completeTaskArrayList.remove(updateTask);
+                                        Toast.makeText(holder.itemView.getContext(), "Task incompleted:(((", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error updating document", e);
+                                    }
+                                });
                     }
                 });
 //                holder.categoryName.setText(model.getCategory().categoryName);
@@ -217,22 +247,30 @@ public class HomeFragment extends Fragment {
                 myViewHolder viewHolder = new myViewHolder(view);
                 return viewHolder;
             }
-
-            @Override
-            public int getItemCount() {
-                return completeTaskArrayList.size();
-            }
         };
 
-        optionComplete.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        optionComplete.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (!queryDocumentSnapshots.isEmpty()) {
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w(TAG, "Listen failed.", error);
+                    return;
+                }
+
+                for (QueryDocumentSnapshot doc : value) {
+                    if (doc.get("done").toString() == "true") {
+                        //Dosth
+                    }
+                }
+
+                if (!value.isEmpty()) {
                     completeEmpty = false;
-                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    List<DocumentSnapshot> list = value.getDocuments();
                     for (DocumentSnapshot d : list) {
                         Task task = d.toObject(Task.class);
+                        task.setId(d.getId());
                         completeTaskArrayList.add(task);
+                        System.out.println("list complete size: " + completeTaskArrayList.size());
                     }
                     adapterComplete.notifyDataSetChanged();
                 } else {
