@@ -35,8 +35,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.skybase.humanizer.DateHumanizer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -54,6 +57,7 @@ public class HomeFragment extends Fragment {
     private Query optionComplete;
     private List<Task> taskArrayList;
     private List<Task> completeTaskArrayList;
+    private Calendar dateBefore;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -108,7 +112,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        optionIncomplete = db.collection("Task").whereEqualTo("done", false);
+        dateBefore = Calendar.getInstance();
+        dateBefore.add(Calendar.DAY_OF_MONTH, -1);
+        dateBefore.set(Calendar.HOUR, 11);
+        dateBefore.set(Calendar.MINUTE, 59);
+        optionIncomplete = db.collection("Task").whereEqualTo("done", false).whereGreaterThanOrEqualTo("createdDate", dateBefore.getTime());
         optionComplete = db.collection("Task").whereEqualTo("done", true);
         //Option for inComplete Task
         FirestoreRecyclerOptions<Task> options = new FirestoreRecyclerOptions.Builder<Task>()
@@ -131,6 +139,11 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
                 holder.taskTittle.setText(model.getTask());
+                //humanizer dateTime
+                if (model.getDueDate() != null) {
+                    holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING) + " at " + new SimpleDateFormat("HH:mm").format(model.getDueDate()));
+                }
+                holder.categoryName.setText(model.getCategory().categoryName);
                 holder.checkButton.setChecked(false);
                 //Radio button onClick
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
@@ -154,10 +167,6 @@ public class HomeFragment extends Fragment {
                                 });
                     }
                 });
-//                holder.categoryName.setText(model.getCategory().categoryName);
-//                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
-                //humanizer dateTime
-                //holder.timastamp
             }
 
             @NonNull
@@ -170,7 +179,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                System.out.println("task Arraylist size: " + taskArrayList.size());
                 return taskArrayList.size();
             }
         };
@@ -218,7 +226,12 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Task model) {
                 holder.taskTittle.setText(model.getTask());
-                holder.checkButton.setChecked(false);
+                holder.checkButton.setChecked(true);
+                //humanizer dateTime
+                if (model.getDueDate() != null) {
+                    holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING) + " at " + new SimpleDateFormat("HH:mm").format(model.getDueDate()));
+                }
+                holder.categoryName.setText(model.getCategory().categoryName);
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -241,9 +254,6 @@ public class HomeFragment extends Fragment {
                     }
                 });
 //                holder.categoryName.setText(model.getCategory().categoryName);
-//                holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING));
-                //humanizer dateTime
-                //holder.timastamp
             }
 
             @NonNull
@@ -256,7 +266,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                System.out.println("Complete task Arraylist size: " + completeTaskArrayList.size());
                 return completeTaskArrayList.size();
             }
         };

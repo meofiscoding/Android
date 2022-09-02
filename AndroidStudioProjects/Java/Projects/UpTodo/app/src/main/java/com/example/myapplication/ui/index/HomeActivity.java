@@ -160,6 +160,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                     //Set clean state of calendar
                     calendar.clear();
                     calendar.set(year, month + 1, dayOfMoth);
+                    calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+                    calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
                     dueDate = calendar.getTime();
                 });
                 //SendBtn onCLick
@@ -169,6 +171,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                     //set data for today
                     calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                     calendar.add(Calendar.DAY_OF_YEAR, 0);
+                    calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+                    calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
                     calendarView.setDate(calendar.getTime().getTime(), true, true);
                     dueDate = calendar.getTime();
                 });
@@ -178,6 +182,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                     //set data for today
                     calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), hours, minutes);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
+                    calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+                    calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
                     calendarView.setDate(calendar.getTime().getTime(), true, true);
                     dueDate = calendar.getTime();
                 });
@@ -187,6 +193,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                     //set data for today
                     calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                     calendar.add(Calendar.DAY_OF_YEAR, 7);
+                    calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+                    calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
                     calendarView.setDate(calendar.getTime().getTime(), true, true);
                     dueDate = calendar.getTime();
                 });
@@ -198,6 +206,12 @@ public class HomeActivity extends AppCompatActivity implements CategoryDialog.On
                 saveButton.setOnClickListener(v2 -> {
                     String task = enter_todo_txt.getText().toString().trim();
                     if (!TextUtils.isEmpty(task) && categoryName != null) {
+                        if (dueDate == null) {
+                            calendar.set(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                            calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR));
+                            calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                            dueDate = calendar.getTime();
+                        }
                         Task myTask = new Task(task, priority, dueDate, Calendar.getInstance().getTime(), false, new Category(categoryName));
 //                        taskDAO.add(myTask).addOnSuccessListener((success) -> {
 //                                    Toast.makeText(layoutBottomSheet.getContext(), "task added successfully", Toast.LENGTH_SHORT).show();
