@@ -71,7 +71,7 @@
                 android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:ems="10"
                 android:hint="Search for your task..."
-                android:inputType="textPersonName"
+                android:inputType="textAutoComplete"
                 android:minHeight="48dp"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"

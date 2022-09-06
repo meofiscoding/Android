@@ -60,6 +60,7 @@
         <entry key="app/src/main/res/layout/task_category_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/menu-v26/bottom_nav_menu.xml" value="0.21510416666666668" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>

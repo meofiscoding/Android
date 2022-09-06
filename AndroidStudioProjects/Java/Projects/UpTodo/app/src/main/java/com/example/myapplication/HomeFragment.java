@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.model.Task;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
@@ -56,8 +57,12 @@ public class HomeFragment extends Fragment {
     private Query optionIncomplete;
     private Query optionComplete;
     private List<Task> taskArrayList;
+    private List<Task> taskArrayListOld;
+    private List<Task> completeTaskArrayListOld;
     private List<Task> completeTaskArrayList;
     private Calendar dateBefore;
+    private FirestoreRecyclerAdapter<Task, myViewHolder> adapter;
+    private FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,6 +87,8 @@ public class HomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         taskArrayList = new ArrayList<>();
         completeTaskArrayList = new ArrayList<>();
+        taskArrayListOld = new ArrayList<>();
+        completeTaskArrayListOld = new ArrayList<>();
         searchBar = (EditText) root.findViewById(R.id.searchBar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,6 +99,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 search = s.toString();
+                searchData(search);
             }
 
             @Override
@@ -109,12 +117,40 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    //search Data
+    private void searchData(String s) {
+        if (s.isEmpty()){
+            completeTaskArrayList = completeTaskArrayListOld;
+            adapterComplete.notifyDataSetChanged();
+            taskArrayList = taskArrayListOld;
+            adapter.notifyDataSetChanged();
+        }else{
+            List<Task> listComplete = new ArrayList<>();
+            for (Task task : completeTaskArrayListOld){
+                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
+                    listComplete.add(task);
+                }
+            }
+            completeTaskArrayList = listComplete;
+            adapterComplete.notifyDataSetChanged();
+
+            List<Task> listInComplete = new ArrayList<>();
+            for (Task task : taskArrayListOld){
+                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
+                    listInComplete.add(task);
+                }
+            }
+            taskArrayList = listInComplete;
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         dateBefore = Calendar.getInstance();
         dateBefore.add(Calendar.DAY_OF_MONTH, -1);
-        dateBefore.set(Calendar.HOUR, 11);
+        dateBefore.set(Calendar.HOUR, 23);
         dateBefore.set(Calendar.MINUTE, 59);
         optionIncomplete = db.collection("Task").whereEqualTo("done", false).whereGreaterThanOrEqualTo("createdDate", dateBefore.getTime());
         optionComplete = db.collection("Task").whereEqualTo("done", true);
@@ -129,7 +165,7 @@ public class HomeFragment extends Fragment {
 
 
         //adapter part
-        FirestoreRecyclerAdapter<Task, myViewHolder> adapter = new FirestoreRecyclerAdapter<Task, myViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<Task, myViewHolder>(options) {
 
             @Override
             public void onDataChanged() {
@@ -179,7 +215,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                return taskArrayList.size();
+                if (taskArrayList != null) {
+                    return taskArrayList.size();
+                }
+                return 0;
             }
         };
 
@@ -207,6 +246,7 @@ public class HomeFragment extends Fragment {
                         task.setId(d.getId());
                         taskArrayList.add(task);
                     }
+                    taskArrayListOld = taskArrayList;
                     adapter.notifyDataSetChanged();
                 } else {
                     incompleteEmpty = true;
@@ -216,7 +256,7 @@ public class HomeFragment extends Fragment {
 
 
 //        Adapter for Complete Task
-        FirestoreRecyclerAdapter<Task, myViewHolder> adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
+        adapterComplete = new FirestoreRecyclerAdapter<Task, myViewHolder>(optionsComplete) {
 
             @Override
             public void onDataChanged() {
@@ -229,7 +269,7 @@ public class HomeFragment extends Fragment {
                 holder.checkButton.setChecked(true);
                 //humanizer dateTime
                 if (model.getDueDate() != null) {
-                    holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_PRETTY_EVERYTHING) + " at " + new SimpleDateFormat("HH:mm").format(model.getDueDate()));
+                    holder.timeStamp.setText(DateHumanizer.humanize(model.getDueDate(), DateHumanizer.TYPE_DD_MMM) + " at " + new SimpleDateFormat("HH:mm").format(model.getDueDate()));
                 }
                 holder.categoryName.setText(model.getCategory().categoryName);
                 holder.checkButton.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +293,6 @@ public class HomeFragment extends Fragment {
                                 });
                     }
                 });
-//                holder.categoryName.setText(model.getCategory().categoryName);
             }
 
             @NonNull
@@ -266,7 +305,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                return completeTaskArrayList.size();
+                if (completeTaskArrayList != null) {
+                    return completeTaskArrayList.size();
+                }
+                return 0;
             }
         };
 
@@ -293,6 +335,7 @@ public class HomeFragment extends Fragment {
                         task.setId(d.getId());
                         completeTaskArrayList.add(task);
                     }
+                    completeTaskArrayListOld = completeTaskArrayList;
                     adapterComplete.notifyDataSetChanged();
                 } else {
                     completeEmpty = true;
