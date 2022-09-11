@@ -10,4 +10,10 @@
     <string name="sign_up_for_facebook">Sign up for Facebook</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="help">help</string>
+    <string name="or">OR</string>
+    <string name="username">Username</string>
+    <string name="don_t_remember_password">Forgot your login detail?</string>
+    <string name="getHelp">Get help signing in.</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
 </resources>
