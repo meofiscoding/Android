@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryFacebook">#2F477A</color>
-    <color name="purple_500">#FF6200EE</color>
+    <color name="primaryFacebook">#3C4A7E</color>
+    <color name="secondaryText">#99A9BD</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_200">#ce93d8</color>
+    <color name="my_button_disabled_state_color">#86646C78</color>
+    <color name="my_button_enabled_state_color">#526491</color>
 </resources>

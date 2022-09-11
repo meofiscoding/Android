@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/button_backgroud_color.xml" value="0.1645" />
         <entry key="app/src/main/res/layout/activity_login_screen2.xml" value="0.18333333333333332" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.27810211181640626" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2606924643584521" />
       </map>
     </option>
   </component>
@@ -13,5 +14,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.10219879150390625" />
+      </ProjectState>
+    </option>
   </component>
 </project>

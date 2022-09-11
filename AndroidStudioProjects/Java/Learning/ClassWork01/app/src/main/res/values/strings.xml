@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Login UI</string>
+    <string name="english">English</string>
+    <string name="change">Change</string>
+    <string name="dot">.</string>
+    <string name="facebook_icon">facebook_icon</string>
+    <string name="email_or_phone">Email or Phone</string>
+    <string name="login">Log in</string>
+    <string name="password">Password</string>
+    <string name="sign_up_for_facebook">Sign up for Facebook</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="help">help</string>
 </resources>
