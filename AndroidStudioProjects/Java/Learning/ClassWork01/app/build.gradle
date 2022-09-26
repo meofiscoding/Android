@@ -38,4 +38,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.navigation:navigation-fragment:2.5.2"
     implementation "androidx.navigation:navigation-ui:2.5.2"
+    //Implement Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 }

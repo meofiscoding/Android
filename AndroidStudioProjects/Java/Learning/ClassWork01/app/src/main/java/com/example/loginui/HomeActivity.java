@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView rec_category;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerMenu;
+    private List<Category> categories;
 
     private void bindingView(){
         rec_category = findViewById(R.id.rec_category);
@@ -59,7 +60,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingView();
         bindingAction();
-        List<Category> categories = new ArrayList<>();
+        categories = new ArrayList<>();
+        initData(categories);
+        CategoryAdapter adapter = new CategoryAdapter(categories, HomeActivity.this);
+        rec_category.setLayoutManager(new GridLayoutManager(this, 3));
+        rec_category.setAdapter(adapter);
+//        receiveIntent();
+    }
+
+    private void initData(List<Category> categories) {
         Category cate1 = new Category("Pharmacy", R.drawable.drugs);
         Category cate2 = new Category("Registry", R.drawable.gift);
         Category cate3 = new Category("Cartwheel", R.drawable.trolley);
@@ -92,9 +101,5 @@ public class HomeActivity extends AppCompatActivity {
         categories.add(cate14);
         categories.add(cate15);
         categories.add(cate16);
-        CategoryAdapter adapter = new CategoryAdapter(categories, HomeActivity.this);
-        rec_category.setLayoutManager(new GridLayoutManager(this, 3));
-        rec_category.setAdapter(adapter);
-//        receiveIntent();
     }
 }

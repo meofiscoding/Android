@@ -1,6 +1,8 @@
 package com.example.loginui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             super(itemView);
             img_cate = itemView.findViewById(R.id.img_category);
             txt_title = itemView.findViewById(R.id.txt_cateName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CategoryDetail.class);
+                    intent.putExtra("category", new Category(categories.get(getBindingAdapterPosition()).getTitle(), categories.get(getBindingAdapterPosition()).getId_drawable()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
