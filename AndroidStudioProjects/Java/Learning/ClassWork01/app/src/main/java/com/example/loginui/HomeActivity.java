@@ -1,6 +1,7 @@
 package com.example.loginui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,11 +29,13 @@ public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ImageView hamburgerMenu;
     private List<Category> categories;
+    private Toolbar toolbar;
 
     private void bindingView(){
         rec_category = findViewById(R.id.rec_category);
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerMenu = findViewById(R.id.hbgMenu);
+        toolbar = findViewById(R.id.toolBar);
 //        txtShowName = findViewById(R.id.txtShowName);
 //        btnClose = findViewById(R.id.btnClose);
     }
@@ -60,6 +64,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingView();
         bindingAction();
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         categories = new ArrayList<>();
         initData(categories);
         CategoryAdapter adapter = new CategoryAdapter(categories, HomeActivity.this);
@@ -101,5 +107,11 @@ public class HomeActivity extends AppCompatActivity {
         categories.add(cate14);
         categories.add(cate15);
         categories.add(cate16);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.custom_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

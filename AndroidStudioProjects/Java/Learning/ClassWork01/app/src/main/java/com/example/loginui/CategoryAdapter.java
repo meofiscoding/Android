@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -19,7 +20,6 @@ import model.Category;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>{
     private List<Category> categories;
     private Context context;
-
     public CategoryAdapter(List<Category> chapters, Context context) {
         this.categories = chapters;
         this.context = context;
