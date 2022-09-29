@@ -1,14 +1,21 @@
 package com.example.loginui;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -30,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView hamburgerMenu;
     private List<Category> categories;
     private Toolbar toolbar;
+    private final int notificationId = 101;
+    private final String NOTIFICATION_CHANNEL = "My channel";
 
     private void bindingView(){
         rec_category = findViewById(R.id.rec_category);
@@ -42,6 +51,26 @@ public class HomeActivity extends AppCompatActivity {
     private void bindingAction(){
         hamburgerMenu.setOnClickListener(this::onMenuClick);
 //        btnClose.setOnClickListener(this::onCloseClick);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent resultIntent = new Intent(this, Cart.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_MUTABLE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(android.R.drawable.star_big_on)
+                .setContentTitle("Shoppe")
+                .setContentText("You have 2 product is on sale, check out now!!")
+                .setChannelId(NOTIFICATION_CHANNEL)
+                .setContentIntent(pendingIntent);
+
+        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "My notification channel", NotificationManager.IMPORTANCE_HIGH);
+
+        NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(channel);
+        notificationManager.notify(notificationId, builder.build());
     }
 
     private void onMenuClick(View view) {
