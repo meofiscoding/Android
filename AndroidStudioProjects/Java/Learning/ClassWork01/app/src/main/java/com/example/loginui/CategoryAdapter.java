@@ -64,6 +64,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             super(itemView);
             img_cate = itemView.findViewById(R.id.img_category);
             txt_title = itemView.findViewById(R.id.txt_cateName);
+            img_cart = itemView.findViewById(R.id.cart_checkout);
             img_cate.setOnClickListener(this::onItemClick);
             txt_title.setOnClickListener(this::onItemClick);
             img_cart.setOnClickListener(this::onCartCheckout);
