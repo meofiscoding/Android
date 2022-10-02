@@ -46,9 +46,23 @@ public class HomeActivity extends AppCompatActivity {
     private List<Category> categories;
     private Toolbar toolbar;
     private final int notificationId = 101;
-    public List<Category> cart;
+    public List<Category> cart = new ArrayList<>();
     private CartAdapter cartAdapter;
     private final String NOTIFICATION_CHANNEL = "My channel";
+    private static HomeActivity uniqInstance;
+    public static HomeActivity getInstance() {
+        if (uniqInstance == null)
+            uniqInstance = new HomeActivity();
+        return uniqInstance;
+    }
+
+    public List<Category> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<Category> cart) {
+        this.cart = cart;
+    }
 
     private void bindingView(){
         rec_category = findViewById(R.id.rec_category);
@@ -75,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(android.R.drawable.star_big_on)
                     .setContentTitle("Shoppe")
-                    .setContentText("You have 2 product is on sale, check out now!!")
+                    .setContentText("You have "+ cart.size() +" product in cart, check out now!!")
                     .setChannelId(NOTIFICATION_CHANNEL)
                     .setContentIntent(pendingIntent);
 
@@ -114,7 +128,6 @@ public class HomeActivity extends AppCompatActivity {
         CategoryAdapter adapter = new CategoryAdapter(categories, HomeActivity.this);
         rec_category.setLayoutManager(new GridLayoutManager(this, 3));
         rec_category.setAdapter(adapter);
-        cart = new ArrayList<>();
         adapter.setData(categories, new CategoryAdapter.IClickAddToCartListener() {
             @Override
             public void onClickAddToCart(ImageView imgAddToCart, Category category) {
@@ -122,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         cart.add(category);
+                        HomeActivity.getInstance().setCart(cart);
                         cartAdapter = new CartAdapter(cart, HomeActivity.this);
                         updateCartCount();
                     }

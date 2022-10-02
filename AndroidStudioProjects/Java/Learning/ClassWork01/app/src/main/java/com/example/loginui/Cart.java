@@ -23,8 +23,7 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         bindingView();
-        HomeActivity homeActivity = new HomeActivity();
-        carts = homeActivity.cart;
+        carts = HomeActivity.getInstance().getCart();
         CartAdapter adapter = new CartAdapter(carts, Cart.this);
         rcvCartList.setLayoutManager(new LinearLayoutManager(this));
         rcvCartList.setAdapter(adapter);
