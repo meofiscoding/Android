@@ -12,5 +12,6 @@
         android:id="@+id/cart_checkout"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
-        android:title="Cart" />
+        android:title="Cart"
+        app:actionLayout="@layout/notification_layout"/>
 </menu>

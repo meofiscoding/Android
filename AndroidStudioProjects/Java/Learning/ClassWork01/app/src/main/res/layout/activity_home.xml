@@ -63,6 +63,7 @@
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
+
             </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -75,6 +76,31 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_end_animation"
+                android:layout_width="7dp"
+                android:layout_height="6dp"
+                android:background="@drawable/gradient"
+                app:layout_constraintBottom_toTopOf="@+id/appBarLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/view_animation"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/design_default_color_on_primary"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"

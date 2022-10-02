@@ -22,16 +22,18 @@ public class LoginScreen2 extends AppCompatActivity {
     }
 
     private void onLoginClick(View view){
-        if (edtPassword.getText().toString().equals("123456") && edtUsername.getText().toString().equals("admin")){
-            Toast.makeText(LoginScreen2.this, "Login successfully!!", Toast.LENGTH_SHORT).show();
-            //this present for current context
-            Intent i = new Intent(this, HomeActivity.class);
-            i.putExtra("name",edtUsername.getText().toString());
-            startActivityForResult(i,1);
-//            startActivity(i);
-        }else{
-            Toast.makeText(LoginScreen2.this, "Login failed", Toast.LENGTH_SHORT).show();
-        }
+//        if (edtPassword.getText().toString().equals("123456") && edtUsername.getText().toString().equals("admin")){
+//            Toast.makeText(LoginScreen2.this, "Login successfully!!", Toast.LENGTH_SHORT).show();
+//            //this present for current context
+//            Intent i = new Intent(this, HomeActivity.class);
+//            i.putExtra("name",edtUsername.getText().toString());
+//            startActivityForResult(i,1);
+////            startActivity(i);
+//        }else{
+//            Toast.makeText(LoginScreen2.this, "Login failed", Toast.LENGTH_SHORT).show();
+//        }
+                    Intent i = new Intent(this, HomeActivity.class);
+                    startActivity(i);
     }
 
     public void bindingAction(){

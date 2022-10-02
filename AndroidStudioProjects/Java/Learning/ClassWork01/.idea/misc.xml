@@ -3,20 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.15587529976019185" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/btn_bg.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/button_backgroud_color.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/cart_bg.xml" value="0.26" />
         <entry key="app/src/main/res/drawable/et_bg.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/footer_bg.xml" value="0.1635" />
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.16156616210937502" />
         <entry key="app/src/main/res/drawable/ic_if_square_facebook.xml" value="0.208" />
         <entry key="app/src/main/res/layout/activity_cart.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_category_detail.xml" value="0.14114583333333333" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.17900322808159724" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.26051177978515627" />
         <entry key="app/src/main/res/layout/activity_login_screen2.xml" value="0.25861511230468753" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22986297607421877" />
         <entry key="app/src/main/res/layout/item_cart.xml" value="0.20052083333333334" />
-        <entry key="app/src/main/res/layout/item_category.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/item_category.xml" value="0.45623779296875" />
+        <entry key="app/src/main/res/layout/notification_layout.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/menu/custom_menu.xml" value="0.21458333333333332" />
       </map>
     </option>

@@ -19,10 +19,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nex3z.notificationbadge.NotificationBadge;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +39,15 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView rec_category;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerMenu;
+    private View viewEndAnimation;
+    private View cart_menu;
+    private NotificationBadge notificationBadge;
+    private ImageView viewAnimation;
     private List<Category> categories;
     private Toolbar toolbar;
     private final int notificationId = 101;
+    public List<Category> cart;
+    private CartAdapter cartAdapter;
     private final String NOTIFICATION_CHANNEL = "My channel";
 
     private void bindingView(){
@@ -45,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerMenu = findViewById(R.id.hbgMenu);
         toolbar = findViewById(R.id.toolBar);
+        viewEndAnimation = findViewById(R.id.view_end_animation);
+        viewAnimation = findViewById(R.id.view_animation);
 //        txtShowName = findViewById(R.id.txtShowName);
 //        btnClose = findViewById(R.id.btnClose);
     }
@@ -57,20 +69,22 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent resultIntent = new Intent(this, Cart.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_MUTABLE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(android.R.drawable.star_big_on)
-                .setContentTitle("Shoppe")
-                .setContentText("You have 2 product is on sale, check out now!!")
-                .setChannelId(NOTIFICATION_CHANNEL)
-                .setContentIntent(pendingIntent);
+        if (cart.size()!= 0){
+            Intent resultIntent = new Intent(this, Cart.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_MUTABLE);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(android.R.drawable.star_big_on)
+                    .setContentTitle("Shoppe")
+                    .setContentText("You have 2 product is on sale, check out now!!")
+                    .setChannelId(NOTIFICATION_CHANNEL)
+                    .setContentIntent(pendingIntent);
 
-        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "My notification channel", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "My notification channel", NotificationManager.IMPORTANCE_HIGH);
 
-        NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(channel);
-        notificationManager.notify(notificationId, builder.build());
+            NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+            notificationManager.notify(notificationId, builder.build());
+        }
     }
 
     private void onMenuClick(View view) {
@@ -100,7 +114,49 @@ public class HomeActivity extends AppCompatActivity {
         CategoryAdapter adapter = new CategoryAdapter(categories, HomeActivity.this);
         rec_category.setLayoutManager(new GridLayoutManager(this, 3));
         rec_category.setAdapter(adapter);
+        cart = new ArrayList<>();
+        adapter.setData(categories, new CategoryAdapter.IClickAddToCartListener() {
+            @Override
+            public void onClickAddToCart(ImageView imgAddToCart, Category category) {
+                AnimationUtil.translateAnimation(viewAnimation, imgAddToCart, toolbar, new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        cart.add(category);
+                        cartAdapter = new CartAdapter(cart, HomeActivity.this);
+                        updateCartCount();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+            }
+        });
+
 //        receiveIntent();
+    }
+
+    private void updateCartCount() {
+        if(notificationBadge == null) {
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (cart.size() == 0){
+                    notificationBadge.setVisibility(View.INVISIBLE);
+                }else{
+                    notificationBadge.setVisibility(View.VISIBLE);
+                    notificationBadge.setText(String.valueOf(cart.size()));
+                }
+            }
+        });
     }
 
     private void initData(List<Category> categories) {
@@ -141,6 +197,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.custom_menu, menu);
+        cart_menu = menu.findItem(R.id.cart_checkout).getActionView();
+        notificationBadge = (NotificationBadge) cart_menu.findViewById(R.id.badge);
+        updateCartCount();
         return super.onCreateOptionsMenu(menu);
     }
 }
