@@ -56,13 +56,28 @@
         app:layout_constraintTop_toBottomOf="@+id/edtusername"
         android:autofillHints="" />
 
+    <CheckBox
+        android:id="@+id/cb_remember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:text="Remember me"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtpassword"
+        app:layout_constraintVertical_bias="1.0" />
+
     <Button
         android:id="@+id/btn_login"
+        style="@style/InstaLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/InstaLogin"
+        android:layout_marginTop="52dp"
         android:text="@string/login"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/edtpassword" />
 
