@@ -1,5 +1,6 @@
 package com.example.loginui;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.io.Serializable;
@@ -36,6 +39,10 @@ public class HomeActivity extends AppCompatActivity {
 
 //    private TextView txtShowName;
 //    private Button btnClose;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private MyViewPagerAdapter myViewPagerAdapter;
+
     private RecyclerView rec_category;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerMenu;
@@ -65,6 +72,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void bindingView(){
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager2 = findViewById(R.id.viewPager);
+        myViewPagerAdapter = new MyViewPagerAdapter(this);
+
         rec_category = findViewById(R.id.rec_category);
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerMenu = findViewById(R.id.hbgMenu);
@@ -76,7 +87,40 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void bindingAction(){
         hamburgerMenu.setOnClickListener(this::onMenuClick);
+        tabLayout.addOnTabSelectedListener(getOnTabSelectedListener());
+        viewPager2.registerOnPageChangeCallback(getOnPageChangeCallback());
 //        btnClose.setOnClickListener(this::onCloseClick);
+    }
+
+    @NonNull
+    private ViewPager2.OnPageChangeCallback getOnPageChangeCallback() {
+        return new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
+            }
+        };
+    }
+
+    @NonNull
+    private TabLayout.OnTabSelectedListener getOnTabSelectedListener() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -121,6 +165,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingView();
         bindingAction();
+        //bind View Pager Adapter
+        viewPager2.setAdapter(myViewPagerAdapter);
+
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         categories = new ArrayList<>();
