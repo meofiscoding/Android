@@ -1,15 +1,5 @@
 package com.example.loginui;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,25 +8,44 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
 import com.nex3z.notificationbadge.NotificationBadge;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Category;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-//    private TextView txtShowName;
+    //    private TextView txtShowName;
 //    private Button btnClose;
+    private static final int FRAGMENT_CONTENT_PROVIDER = 1;
+    private int currentFragment = FRAGMENT_CONTENT_PROVIDER;
+    private AppBarConfiguration mAppBarConfiguration;
     private RecyclerView rec_category;
+    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerMenu;
     private View viewEndAnimation;
@@ -50,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     private CartAdapter cartAdapter;
     private final String NOTIFICATION_CHANNEL = "My channel";
     private static HomeActivity uniqInstance;
+
     public static HomeActivity getInstance() {
         if (uniqInstance == null)
             uniqInstance = new HomeActivity();
@@ -64,38 +74,57 @@ public class HomeActivity extends AppCompatActivity {
         this.cart = cart;
     }
 
-    private void bindingView(){
+    private void bindingView() {
         rec_category = findViewById(R.id.rec_category);
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerMenu = findViewById(R.id.hbgMenu);
         toolbar = findViewById(R.id.toolBar);
         viewEndAnimation = findViewById(R.id.view_end_animation);
         viewAnimation = findViewById(R.id.view_animation);
+        navigationView = findViewById(R.id.navigationView);
 //        txtShowName = findViewById(R.id.txtShowName);
 //        btnClose = findViewById(R.id.btnClose);
     }
-    private void bindingAction(){
+
+    private void bindingAction() {
         hamburgerMenu.setOnClickListener(this::onMenuClick);
+        navigationView.setNavigationItemSelectedListener(this);
 //        btnClose.setOnClickListener(this::onCloseClick);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.nav_home) {
+            Intent i = new Intent(this, DatabaseActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        }
+//        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+//        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onStart() {
         super.onStart();
-        if (cart.size()!= 0){
+        if (cart.size() != 0) {
             Intent resultIntent = new Intent(this, Cart.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_MUTABLE);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(android.R.drawable.star_big_on)
                     .setContentTitle("Shoppe")
-                    .setContentText("You have "+ cart.size() +" product in cart, check out now!!")
+                    .setContentText("You have " + cart.size() + " product in cart, check out now!!")
                     .setChannelId(NOTIFICATION_CHANNEL)
                     .setContentIntent(pendingIntent);
 
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "My notification channel", NotificationManager.IMPORTANCE_HIGH);
 
-            NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(channel);
             notificationManager.notify(notificationId, builder.build());
         }
@@ -110,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
 //       System.exit(0);
 //    }
 
-//    private void receiveIntent(){
+    //    private void receiveIntent(){
 //        Intent i = this.getIntent();
 //        String name = i.getStringExtra("name");
 //        txtShowName.setText("name: "+name);
@@ -119,8 +148,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        setSupportActionBar(toolbar);
         bindingView();
         bindingAction();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                .setOpenableLayout(drawerLayout)
+                .build();
+
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         categories = new ArrayList<>();
@@ -157,15 +192,15 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void updateCartCount() {
-        if(notificationBadge == null) {
+        if (notificationBadge == null) {
             return;
         }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (cart.size() == 0){
+                if (cart.size() == 0) {
                     notificationBadge.setVisibility(View.INVISIBLE);
-                }else{
+                } else {
                     notificationBadge.setVisibility(View.VISIBLE);
                     notificationBadge.setText(String.valueOf(cart.size()));
                 }
@@ -216,4 +251,13 @@ public class HomeActivity extends AppCompatActivity {
         updateCartCount();
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+
 }
