@@ -34,6 +34,22 @@ public class DatabaseActivity extends AppCompatActivity {
     private void bindingAction() {
         btnAdd.setOnClickListener(this::addProduct);
         btnfind.setOnClickListener(this::findProduct);
+        btnDelete.setOnClickListener(this::deleteProduct);
+    }
+
+    private void deleteProduct(View view) {
+        MyDBHandler dbHandler = new MyDBHandler(this, null,
+                null, 1);
+        boolean result = dbHandler.deleteProduct(productName.getText().toString());
+        if (result)
+        {
+            id.setText("Record Deleted");
+            productName.setText("");
+            description.setText("");
+            price.setText("");
+        }
+        else
+            id.setText("No Match Found");
     }
 
     private void findProduct(View view) {
