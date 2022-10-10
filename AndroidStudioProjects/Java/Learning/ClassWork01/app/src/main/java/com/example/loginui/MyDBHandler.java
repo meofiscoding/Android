@@ -13,7 +13,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     private ContentResolver myCR;
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "goods.db";
+    public static final String DATABASE_NAME = "goods.db";
     public static final String TABLE_PRODUCTS = "product";
     public static final String COLUMN_ID = "Id";
     public static final String COLUMN_PRODUCT_NAME = "ProductName";

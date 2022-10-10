@@ -1,6 +1,7 @@
 package com.example.loginui;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -65,7 +66,7 @@ public class DatabaseActivity extends AppCompatActivity {
     }
 
     private void addProduct(View view) {
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        MyDBHandler dbHandler = new MyDBHandler(this, MyDBHandler.DATABASE_NAME, null, 1);
         double productPrice = Double.parseDouble(price.getText().toString());
         String productDescription = description.getText().toString();
         Product product = new Product(productName.getText().toString(), productDescription, productPrice);

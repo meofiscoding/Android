@@ -4,7 +4,15 @@
     package="com.example.loginui">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <permission
+        android:name="com.example.WRITE_DATABASE"
+        android:label="Write Database"
+        android:protectionLevel="normal" />
 
+    <permission
+        android:name="com.example.READ_DATABASE"
+        android:label="Read Database"
+        android:protectionLevel="normal" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,7 +27,9 @@
             android:name=".MyContentProvider"
             android:authorities="com.example.loginui.MyContentProvider"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:readPermission="com.example.loginui.READ_DATABASE"
+            android:writePermission="com.example.loginui.WRITE_DATABASE"/>
         <activity
             android:name=".DatabaseActivity"
             android:exported="false" />
