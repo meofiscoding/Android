@@ -30,14 +30,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stopMusic(View view) {
-        Intent bi = new Intent(MyService.ACTION_STOP_MUSIC);
-        bi.setPackage("com.example.musicservice");
-        stopService(bi);
+        Intent intent = new Intent(this, MyService.class);
+        stopService(intent);
     }
 
     private void startMusic(View view) {
-        Intent bi = new Intent(MyService.ACTION_START_MUSIC);
-        bi.setPackage("com.example.musicservice");
-        startService(bi);
+        Song song = new Song("Foreground Music", R.drawable.ic_baseline_library_music_24,R.raw.lalung);
+        Intent i = new Intent(this, MyService.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("my_song",song);
+        i.putExtras(bundle);
+        startService(i);
     }
 }
