@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMusic(View view) {
-        Song song = new Song("Foreground Music", R.drawable.ic_baseline_library_music_24,R.raw.lalung);
+        Song song = new Song("Lùn Thái Vũ", R.drawable.ic_baseline_library_music_24,R.raw.lalung);
         Intent i = new Intent(this, MyService.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("my_song",song);
