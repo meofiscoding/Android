@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../layout/custom_preview.xml" value="0.15617505995203837" />
+        <entry key="app/src/main/res/drawable/border.xml" value="0.149" />
         <entry key="app/src/main/res/layout/activity_trello_home.xml" value="0.14010416666666667" />
+        <entry key="app/src/main/res/layout/bar_item.xml" value="0.1375" />
+        <entry key="app/src/main/res/layout/card_view_item.xml" value="0.14010416666666667" />
         <entry key="app/src/main/res/layout/content_trello_home.xml" value="0.30680389404296876" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14010416666666667" />
+        <entry key="app/src/main/res/layout/text_view_item.xml" value="0.14010416666666667" />
       </map>
     </option>
   </component>
