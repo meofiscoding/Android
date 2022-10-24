@@ -61,4 +61,5 @@ public class DefaultCellViewGroup extends FrameLayout implements
     public void bindFirstBody(List<String> strings, int i) {
         txt_content.setText(myGanttItemsList.get(i).getTaskName());
     }
+
 }

@@ -82,7 +82,7 @@ public class MyTableFixHeaderAdapter extends TableFixHeaderAdapter<
     }
 
     @Override
-    protected boolean isSection(List list, int i) {
+    protected boolean isSection(List<List<String>> list, int i) {
         return false;
     }
 }
