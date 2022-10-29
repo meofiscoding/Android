@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5933e31-8b7a-4b56-a869-0bb61a3b8b6a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/AndroidStudioProjects.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AndroidStudioProjects.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_autoconnect.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_autoconnect.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_barriers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_barriers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_chains.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_chains.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_inference.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_inference.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_ratio.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_ratio.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_start.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/app/src/main/res/layout/activity_main_start.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Java/FirstUI/constraint-layout/constraint-layout-start/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/Android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/Android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +17,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="29ngFS5S093VtLiK5w7ZpcHrXp4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -36,7 +32,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
