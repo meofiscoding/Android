@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 search = s.toString();
-                searchData(search);
+               // searchData(search);
             }
 
             @Override
@@ -118,32 +118,32 @@ public class HomeFragment extends Fragment {
     }
 
     //search Data
-    private void searchData(String s) {
-        if (s.isEmpty()){
-            completeTaskArrayList = completeTaskArrayListOld;
-            adapterComplete.notifyDataSetChanged();
-            taskArrayList = taskArrayListOld;
-            adapter.notifyDataSetChanged();
-        }else{
-            List<Task> listComplete = new ArrayList<>();
-            for (Task task : completeTaskArrayListOld){
-                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
-                    listComplete.add(task);
-                }
-            }
-            completeTaskArrayList = listComplete;
-            adapterComplete.notifyDataSetChanged();
-
-            List<Task> listInComplete = new ArrayList<>();
-            for (Task task : taskArrayListOld){
-                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
-                    listInComplete.add(task);
-                }
-            }
-            taskArrayList = listInComplete;
-            adapter.notifyDataSetChanged();
-        }
-    }
+//    private void searchData(String s) {
+//        if (s.isEmpty()){
+//            completeTaskArrayList = completeTaskArrayListOld;
+//            adapterComplete.notifyDataSetChanged();
+//            taskArrayList = taskArrayListOld;
+//            adapter.notifyDataSetChanged();
+//        }else{
+//            List<Task> listComplete = new ArrayList<>();
+//            for (Task task : completeTaskArrayListOld){
+//                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
+//                    listComplete.add(task);
+//                }
+//            }
+//            completeTaskArrayList = listComplete;
+//            adapterComplete.notifyDataSetChanged();
+//
+//            List<Task> listInComplete = new ArrayList<>();
+//            for (Task task : taskArrayListOld){
+//                if (task.getTask().toLowerCase().contains(s.toLowerCase())){
+//                    listInComplete.add(task);
+//                }
+//            }
+//            taskArrayList = listInComplete;
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
 
     @Override
     public void onStart() {

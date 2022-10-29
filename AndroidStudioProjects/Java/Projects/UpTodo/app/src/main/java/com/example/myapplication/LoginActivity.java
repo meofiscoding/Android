@@ -23,7 +23,9 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.example.myapplication.model.Workplace;
 import com.example.myapplication.ui.index.HomeActivity;
+import com.example.myapplication.ui.index.Workplace_recycle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -178,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(LoginActivity.this, "User login successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, Workplace_recycle.class));
             } else {
                 Toast.makeText(LoginActivity.this, "Login error"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
