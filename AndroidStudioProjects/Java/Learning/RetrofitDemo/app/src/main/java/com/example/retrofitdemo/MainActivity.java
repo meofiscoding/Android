@@ -23,33 +23,34 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private LinearLayoutManager linearLayoutManager;
     private PostAdapter postAdapter;
-    private List<Post> postList;
+    private List<Post> postList= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindingView();
-        postList = new ArrayList<>();
-        linearLayoutManager =  new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        linearLayoutManager =  new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         postAdapter = new PostAdapter(postList);
         recyclerView.setAdapter(postAdapter);
         fetchPost();
     }
 
     private void fetchPost() {
+        progressBar.setVisibility(View.VISIBLE);
         RetrofitClient.getRetrofitClient().getPosts().enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     postList.addAll(response.body());
                     postAdapter.notifyDataSetChanged();
-                    progressBar.setVisibility(GONE);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                progressBar.setVisibility(GONE);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
