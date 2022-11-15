@@ -1,115 +1,240 @@
 import 'package:flutter/material.dart';
 
+//Entry point
 void main() {
+  //take a simple widget to inflate to screen
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.red,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      home: MyForm(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MyForm extends StatefulWidget {
+  const MyForm({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyForm> createState() => _MyFormState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+//Def corresponding state class
+//This class hold data related to form
+class _MyFormState extends State<MyForm> {
+  // Define the focus node. To manage the lifecycle, create the FocusNode in
+  // the initState method, and clean it up in the dispose method.
+  late FocusNode focusNode;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        //make text tittle bold
+        title: const Text("三凛に質問する"),
+        //change color
+        backgroundColor: Colors.pink[200],
+        //make text center
+        centerTitle: true,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: Container(
+          //add color to container
+          color: Colors.pink[50],
+          //change padding left and right is 30, top and bottomconst  is 20
+          padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+          //make child column
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //make column center
+              children: [
+                Text(
+                    "*ご注意\nこちらの質問フォームはコンテンツに関するご質問専用です。\n アプリの機能に関する質問はこちらではなく\n【アプリについてご質問・ご要望】へお問合せください。",
+                    style: TextStyle(color: Colors.red[600], fontSize: 10.7)),
+                const SizedBox(height: 30),
+                //add text
+                const Text(
+                  "お名前",
+                  //text align left
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                //add text
+                TextField(
+                  autofocus: true,
+                  //align
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    //add border
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        //add border color
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.pink[800]!)),
+                    isDense: true,
+                    // Added this
+                    contentPadding: EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                //add text
+                const Text(
+                  "メールアドレス",
+                  //text align left
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                //add text
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    //add border
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        //add border color
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.pink[800]!)),
+                    isDense: true,
+                    // Added this
+                    contentPadding: EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                //add text
+                const Text(
+                  "メールアドレス確認用",
+                  //text align left
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                //add text
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    //add border
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        //add border color
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.pink[800]!)),
+                    isDense: true,
+                    // Added this
+                    contentPadding: EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                //add text
+                const Text(
+                  "メールアドレス確認用",
+                  //text align left
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                //add text
+                TextField(
+                  autofocus: true,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        //add border color
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.pink[800]!)),
+                    //add border
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        //add border color
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.pink[800]!)),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                //nest column
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pink[300],
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      child: const Text("送信する"),
+                    ),
+                    //add text
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //add text with text color is pink[600]
+                    Text(
+                      "ご質問を承りました。",
+                      style: TextStyle(color: Colors.pink[600]),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                    "<メモ>\n・送信完了後、送信完了しましたの文字を表示させる\n ・このフォームは三凛に直接届くようにする\n・アプリ内にメールボックスを持たずEメールで返信",
+                    style: TextStyle(fontSize: 10.7)),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          )
+
+          //add text child with color is red and text size is 10]
+          ),
     );
   }
 }
