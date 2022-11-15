@@ -7,7 +7,7 @@ class EditText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       autofocus: true,
       //align
       decoration: InputDecoration(
@@ -28,6 +28,12 @@ class EditText extends StatelessWidget {
         // Added this
         contentPadding: const EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
     );
   }
 }
