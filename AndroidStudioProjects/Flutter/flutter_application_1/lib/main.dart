@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/TextField.dart';
+
+import 'Label.dart';
 
 //Entry point
 void main() {
@@ -13,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: MyForm(),
+      // debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -57,7 +61,7 @@ class _MyFormState extends State<MyForm> {
       body: Container(
           //add color to container
           color: Colors.pink[50],
-          //change padding left and right is 30, top and bottomconst  is 20
+          //change padding left and right is 30, top and bottom const  is 20
           padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
           //make child column
           child: SingleChildScrollView(
@@ -70,113 +74,27 @@ class _MyFormState extends State<MyForm> {
                     style: TextStyle(color: Colors.red[600], fontSize: 10.7)),
                 const SizedBox(height: 30),
                 //add text
-                const Text(
-                  "お名前",
-                  //text align left
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                Label(title: "お名前"),
                 const SizedBox(height: 5),
                 //add text
-                TextField(
-                  autofocus: true,
-                  //align
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    //add border
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        //add border color
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.pink[800]!)),
-                    isDense: true,
-                    // Added this
-                    contentPadding: EdgeInsets.all(8),
-                  ),
-                ),
+                const EditText(),
                 const SizedBox(height: 20),
                 //add text
-                const Text(
-                  "メールアドレス",
-                  //text align left
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                Label(title: "メールアドレス"),
                 const SizedBox(height: 5),
                 //add text
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    //add border
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        //add border color
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.pink[800]!)),
-                    isDense: true,
-                    // Added this
-                    contentPadding: EdgeInsets.all(8),
-                  ),
-                ),
+                const EditText(),
                 const SizedBox(height: 20),
                 //add text
-                const Text(
-                  "メールアドレス確認用",
-                  //text align left
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                Label(title: "メールアドレス確認用"),
                 const SizedBox(height: 5),
                 //add text
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Colors.pink[800]!),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    //add border
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        //add border color
-                        borderSide:
-                            BorderSide(width: 1, color: Colors.pink[800]!)),
-                    isDense: true,
-                    // Added this
-                    contentPadding: EdgeInsets.all(8),
-                  ),
-                ),
+                const EditText(),
                 const SizedBox(height: 20),
                 //add text
-                const Text(
-                  "メールアドレス確認用",
-                  //text align left
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                Label(title: "ご質問　(具体的に記載をお願いします)"),
                 const SizedBox(height: 5),
-                //add text
+                //add text area
                 TextField(
                   autofocus: true,
                   maxLines: 5,
@@ -232,7 +150,6 @@ class _MyFormState extends State<MyForm> {
               ],
             ),
           )
-
           //add text child with color is red and text size is 10]
           ),
     );
